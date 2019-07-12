@@ -138,8 +138,24 @@
         for (const [index,value] of arrayL.entries()) {
             console.log('打印键值：'+index,'打印value值==>'+value)
         }
-
         
+        // 第二次提交内容至这个分支上
+
+        // 创建文件夹 mkdir 文件名
+        // 进入该文件夹 cd 文件名
+        // 通过命令 git init 把这个文件夹变成Git可管理的仓库 即初始化这个文件夹（生成的后缀为 .git文件夹 是Git用来跟踪和管理版本库）
+
+        // Changes to be committed: 表示刚才修改的部分已经被提交至暂存区
+        // Changes not staged for commit: 修改的内容未被提交至暂存区
+
+        // 将本地的仓库和远端的仓库进行关联：（这个时候在github上这个仓库还是空的）
+        // 查询 首先检查一下本地库中有没有已经关联的远程仓库 如果已经有了可以删除 或者可以重新建立一个 别重名 git remote -v
+        // 删除 如果发现关联了远程库 可以先删除这种关联 （要不然无法推送代码上去 删除关联）git remote remove origin
+        // 新建 git remote add origin 远程仓库的地址 (可以使用https或者ssh的方式新建)
+
+        // 将本地库的内容上传到远程库中 git push -u origin master 
+        // 由于新建的远程仓库是空的，所以要加上-u这个参数，等远程仓库里面有了内容之后，下次再从本地库上传内容的时候只需下面这样就可以了：
+        // git push origin master
 
     </script>
 </body>
