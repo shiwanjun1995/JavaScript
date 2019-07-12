@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Array</title>
+</head>
+<body>
+    
+    <script>
+        let array = [1,5,9,2,4,6];
+        document.write('<h2>原始for循环</h2>')
+        for (var i = 0; i < array.length; i++) {
+            document.write(`<h3>索引号：${i}&nbsp;&nbsp;元素是==>${array[i]}</h3>`)
+        }
+        
+       // 用于遍历数组 让数组内的值执行fuction下的操作
+       let arrayI = [];
+       document.write('<h2>forEach循环</h2>')
+       array.forEach((item,index,arr)=> {
+            console.log('当前的元素值==>'+item,'当前元素的索引值==>'+index);
+            console.log('传入的数组%c==>'+arr,"color:red;font-weight:bold;");
+            arrayI.push(Math.pow(item,3))
+        })
+        console.log(arrayI,'array');
+        
+        // 用于对传入的数组进行遍历 调用函数后返回返回一个新的数组
+       let newArr = array.map((item,index,arr)=> {
+           return Math.pow(item,2)
+       })
+       console.log(newArr);
+
+       // 用于检测数组中的元素是否满足指定条件（函数提供）
+       // 如果有一个元素满足条件，则表达式返回true , 剩余的元素不会再执行检测。
+       let mark = array.some((item,index,arr)=> {
+            return item > 3
+       })
+       console.log(mark);
+
+       // 方法用于检测数组所有元素是否都符合指定条件（通过函数提供）
+       // 使用指定函数检测数组中的所有元素：
+       // 如果数组中检测到有一个元素不满足，则整个表达式返回 false ，且剩余的元素不会再进行检测。
+       let markT = array.every((item,index,arr)=> {
+           console.log('当前元素的值==>'+item,'当前元素的索引值==>'+index);
+           return item >= 1
+       })
+       console.log(markT);
+
+       // 注意：some 和 every 相反 前者是只要有一个满足条件 就返回true 后者是需要全部满足条件 才会返回true
+
+       // 方法创建一个新的数组，新数组中的元素是通过检查指定数组中符合条件的所有元素
+       let newArray =  array.filter((item,index,arr)=> {
+           return item > 2 && item < 9
+       })
+       console.log(newArray);
+
+        // 这几个方法有一些共同点：
+
+        // a) 它们的参数都是一个function
+
+        // b) 它们的参数function的参数都是一样的：(item, index, array) array就是调用这个方法的数组实例。
+
+        // 那么我们只需要知道各个方法的含义和返回值这两个指标就可以知道它们的用法了，下面一一介绍
+
+        // every 返回值：Boolean；含义：如果数组中每个元素均满足条件，则返回true，否则返回false。
+
+        // some 返回值：Boolean；含义：如果数组中有某个元素满足条件，则返回true，否则返回false。
+
+        // filter 返回值：Array；含义：返回原数组中满足条件的元素组成的新数组。（是为了去掉不必要的值）
+
+        // map 返回值：Array；含义：返回原数组的每一项经过map参数指定的函数处理后的新数组。 (是为了改变值)
+
+        // forEach 返回值：没有返回值；含义：对数组中的每一项应用forEach参数指定的函数。
+        
+
+        // indexOf 返回指定元素的索引值  如果没有的话就返回-1 搜索数组中的元素，并返回它所在的位置
+        Array.prototype.indexOfCopy = function (value) { 
+            var arr  = this; 
+            var index = -1;
+            for (var i = 0, len = arr.length; i < len; i++) {
+                if (arr[i] == value) {
+                    index = i
+                    return index 
+                }
+            }
+            return index
+        }
+        let temp = [1,-1,9,78,23].indexOfCopy(780);
+        console.log(temp);
+
+        // forEach 方法只是为了循环 并不会帮你做任何事
+        // map 方法相当于在循环的时候你告诉数组当前遍历的这个值需要改成什么样，那么它就会最后给什么样的数组
+        // filter 方法相当于在循环的时候数组遍历一个个对象，并问你这个是不是你要找的值，如果你说是，他就会给你返回一个到新的数组中，不是他就会剔除
+        // some和every 方法相当于在遍历的时候拿着一个个对象问你这个是不是你找的，只要你说了一遍是，那么他就会给你分别返回的是true和false；
+        // indexOf 方法告诉你当前指定元素的索引值
+
+        var arrayL = ['姓名','是','石头','也是','大猪'];
+        for (var item of arrayL) {
+            console.log(item);
+        }
+        // arrayL.splice(arrayL.indexOf('也是'),1)
+        // console.log(arrayL);
+        // for (var i = 0, len = arrayL.length; i < len; i++) console.log(arrayL[i]);
+        // 如果for 条件语句 下面只有一条判断 那么不用包{}
+        // 删除数组中的 也是
+        // var arrayLNew = arrayL.filter((item,index,arr)=> {
+        //     return item !== '也是'
+        // })
+        
+        var arrayLNew = [];
+        arrayL.forEach((item,index,arr)=> {
+            if (item !== '也是') {
+                arrayLNew.push(item)
+            }
+        })
+        console.log(arrayLNew);
+       
+        for (var i = 0; i < arrayL.length; i++) {
+            if (arrayL[i] === '也是') {
+                arrayL.splice(i,1) // 数组长度减一
+                // delete arrayL[i] // 被删除的元素变成了 undefined 其他的元素的键值还是不变。
+            }
+        }
+        console.log(arrayL);
+        document.write(`<h3>${arrayL}</h3>`)
+        // ES6 提供三个新的方法 —— entries()，keys()和values() —— 用于遍历数组。它们都返回一个遍历器对象，
+        // keys()是对键名的遍历、values()是对键值的遍历，entries()是对键值对的遍历
+        for (let key of arrayL.keys()) {
+            console.log(key);
+        }
+        for (let val of arrayL.values() ) console.log(val);
+
+        for (let arr of arrayL.entries()) {
+            console.log(arr);
+        }
+        // 循环分别输出下标和value
+        for (const [index,value] of arrayL.entries()) {
+            console.log('打印键值：'+index,'打印value值==>'+value)
+        }
+
+
+    </script>
+</body>
+</html>
