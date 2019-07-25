@@ -54,7 +54,7 @@
            return item > 2 && item < 9
        })
        console.log(newArray);
-
+       
         // 这几个方法有一些共同点：
 
         // a) 它们的参数都是一个function
@@ -159,6 +159,111 @@
 
         // 第三次提交内容至这个分支上
         // 解决GitHub提交历史头像不显示问题 发现邮箱名字和上传的邮箱名字不匹配导致
+        
+         // 通过 flag 来判断 和存储 只取 支付宝 微信 话费支付
+         let arrTemp = [
+            {
+                title: '钻石会员月包',
+                payments: [
+                    {
+                        code: "ALI_PAY",
+                        name: "支付宝支付",
+                    },
+                    {
+                        code: "WEIXIN_PAY",
+                        name: "微信支付",
+                    },
+                    {
+                        code: "MIGU_GROUP_V3_PAY",
+                        name: "咪咕一级支付",
+                    }
+                ]
+            },
+            {
+                title: '钻石会员季包',
+                payments: [
+                    {
+                        code: "ALI_PAY",
+                        name: "支付宝支付",
+                    },
+                    {
+                        code: "WEIXIN_PAY",
+                        name: "微信支付",
+                    },
+                    {
+                        code: "MIGU_GROUP_V3_PAY",
+                        name: "咪咕一级支付",
+                    },
+                    {
+                        code: "MIGU_GROUP_V3_SCAN_PAY",
+                        name: "咪咕一级支付V3扫码支付",
+                    }
+                ]
+            },
+            {
+                title: '钻石会员半年包',
+                payments: [
+                    {
+                        code: "ALI_PAY",
+                        name: "支付宝支付",
+                    },
+                    {
+                        code: "WEIXIN_PAY",
+                        name: "微信支付",
+                    },
+                    {
+                        code: "MIGU_GROUP_V3_PAY",
+                        name: "咪咕一级支付",
+                    }
+                ]
+            },
+            {
+                title: '钻石会员年包',
+                payments: [
+                    {
+                        code: "ALI_PAY",
+                        name: "支付宝支付",
+                    },
+                    {
+                        code: "WEIXIN_PAY",
+                        name: "微信支付",
+                    },
+                    {
+                        code: "MIGU_GROUP_V3_PAY",
+                        name: "咪咕一级支付",
+                    }
+                ]
+            },
+            {
+                title: '钻石会员连续包月',
+                payments: [
+                    {
+                        code: "SUNNY_V6_MOBILE_BOSS",
+                        name: "移动话费支付V6[阳光计划]",
+                    }
+                ]
+            }
+        ];
+        console.log(arrTemp);
+        function diseposeModules(arr) {
+            let payTemp = [];
+            for (let i = 0; i < arr.length; i++) {
+                for (let j = 0; j < arr[i].payments.length; j++) {
+                    let payCode = arr[i].payments[j].code;
+                    let flag = false;
+                    if (payCode == 'ALI_PAY' || payCode == 'WEIXIN_PAY' || payCode == 'SUNNY_V6_MOBILE_BOSS' ) {
+                        flag = true;
+                        // break;
+                    }
+                    if (flag) {
+                        payTemp.push(arr[i].payments[j]);
+                    }
+                }
+            }
+            console.log(payTemp);
+            return payTemp;
+        }
+        diseposeModules(arrTemp)
         
 
     </script>
