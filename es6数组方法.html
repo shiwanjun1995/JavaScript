@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>es6数组方法</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        li {
+            list-style: none;
+            width: 100%;
+            height: 20px;
+            line-height: 20px;
+            text-align: center;
+            border-bottom: 1px solid #ff4400;
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        <li>西游记</li>
+        <li>水浒传</li>
+        <li>红楼梦</li>
+        <li>三国演义</li>
+        <li>聊斋志异</li>
+        <li>儒林外史</li>
+        <li>封神榜</li>
+        <li>老残游记</li>
+    </ul>
+    <script>
+        // 1.find 该方法主要应用于查找第一个符合条件的数组元素 它的参数是一个回调函数。在回调函数中可以写你要查找元素的条件，
+        // 当条件成立为true时，返回该元素。如果没有符合条件的元素，返回值为undefined。
+        const arr = ['西游记', '水浒传', '红楼梦', '三国演义', '聊斋志异', '儒林外史', '封神榜', '老残游记'];
+        // var res1 = arr1.find(v => {
+        //     return v === '红楼梦'
+        // })
+
+        var res1 = arr.find(v => v === '三国演义')
+        // 当箭头函数只有一个表达式 {} 和 return 都可以省略
+        console.log(res1,'返回查找到的第一个符合条件的数组元素');
+        
+        // 2.findIndex()与find()的使用方法相同，
+        //只是当条件为true时findIndex()返回的是索引值，而find()返回的是元素。如果没有符合条件元素时findIndex()返回的是-1，而find()返回的是undefined。
+        var res2 = arr.findIndex(v => {
+            return v === '三国演义'
+        })
+        console.log(res2,'返回查找到的那一项的索引值'); 
+
+        // 3.filter()与find()使用方法也相同。同样都接收三个参数。不同的地方在于返回值。
+        // filter()返回的是数组，数组内是所有满足条件的元素，而find()只返回第一个满足条件的元素。如果条件不满足，filter()返回的是一个空数组，而find()返回的是undefined
+        var res3 = arr.filter(v => v === '三国演义');
+        console.log(res3,'返回所有满足条件的集合');
+
+        // 用于数组去重
+        const myArr = [1,3,4,5,6,3,7,4];
+        var res4 = myArr.filter((value,index,arr) => {
+            console.log(arr.indexOf(value));
+            return arr.indexOf(value) === index
+        })
+        console.log(res4);
+    </script>
+</body>
+</html>
