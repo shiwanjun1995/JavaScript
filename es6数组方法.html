@@ -63,6 +63,16 @@
         })
         console.log(res4);
 
+        const name = "Chuloo"
+        // const name = ['1','2','3']
+        const map = Array.prototype.map
+        
+        const newName = map.call(name,eachLetter => {
+        return `${eachLetter}a`
+        })
+        
+        console.log(newName) // ["Ca", "ha", "ua", "la", "oa", "oa"]
+
         // 参考链接： https://www.cnblogs.com/redsquirrel/p/11546534.html
     </script>
 </body>
