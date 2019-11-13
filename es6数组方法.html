@@ -72,8 +72,13 @@
         })
         
         console.log(newName) // ["Ca", "ha", "ua", "la", "oa", "oa"]
+        // call 方法可以用来代替另一个对象调用一个方法。call 方法可将一个函数的对象上下文从初始的上下文改变为由 thisObj 指定的新对象。
+        // 如果没有提供 thisObj 参数，那么 Global 对象被用作 thisObj。
 
-        // 参考链接： https://www.cnblogs.com/redsquirrel/p/11546534.html
+        // apply 如果 argArray 不是一个有效的数组或者不是 arguments 对象，那么将导致一个 TypeError。
+        // 如果没有提供 argArray 和 thisObj 任何一个参数，那么 Global 对象将被用作 thisObj， 并且无法被传递任何参数。
+        // 注意apply和call的区别，apply的第二参数是数组，call是多个参数。
+        // 参考链接： 1.https://www.cnblogs.com/redsquirrel/p/11546534.html 2.https://www.w3cschool.cn/wqf_web/wqf_web-x54328d9.html
     </script>
 </body>
 </html>
