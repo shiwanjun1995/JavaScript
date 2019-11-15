@@ -5,25 +5,98 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Array</title>
+    <style>
+        .content-box {
+            /* height: 100px;
+            line-height: 100px; */
+            text-align: center;
+            /* background-color: #ccffff; */
+            background-color: #cff;
+        }
+        h2 {
+          text-align: center;
+        }
+    </style>
 </head>
 <body>
-    
+    <h1>1.foreEach</h1>
+    <div class="content-box">
+        <p>
+            该方法对数组的每个元素执行一次提供的函数（带中括号的表示是可以省略不写的）
+            用于遍历数组 让数组内的值执行fuction下的操作
+            <br>
+            <b>不能停止里面的遍历，除非程序报错 这些数组方法可以对数组元素判断，以便确定是否需要继续遍历：every()，some()，find()，findIndex()</b>
+        </p>
+    </div>
+    <h1>2.map</h1>
+    <div class="content-box">
+        <p>
+            该方法会返回一个新数组 其结果是原始数组中的每个元素调用一个提供的函数后返回的结果
+            <br>
+            <b>“映射”，也就是原数组被“映射”成对应新数组</b>
+        </p>
+    </div>
+    <h1>3.some</h1>
+    <div class="content-box">
+      <p>
+        该方法会返回一个布尔类型的值 用于测试数组中是不是至少有一个元素通过了被提供的函数测试
+        <br>
+        <b>注意：如果用一个空数组进行测试，在任何情况下它返回的都是false。 数组中有至少一个元素通过回调函数的测试就会返回true；所有元素都没有通过回调函数的测试返回值才会为false。</b>
+      </p>
+    </div>
+    <h1>4.every</h1>
+    <div class="content-box">
+      <p>
+        该方法会返回一个布尔类型的值 用于测试数组内的所有元素是否都通过了被提供的函数测试
+        <br>
+        <b>注意：若收到一个空数组，此方法在一切情况下都会返回 true。 如果回调函数的每一次返回都为 truthy 值，返回 true ，否则返回 false。</b>
+      </p>
+    </div>
+    <h1>5.filter</h1>
+    <div class="content-box">
+      <p>
+        该方法会返回一个新数组 其结果是通过所提供函数实现的测试的所有元素。 
+        <br>
+        <b>一个新的、由通过测试的元素组成的数组，如果没有任何数组元素通过测试，则返回空数组。</b>
+      </p>
+    </div>
+    <h2>共同点</h2>
+    <div class="content-box">
+      <p>
+          这几个方法有一些共同点：
+          a) 它们的参数都是一个function
+          b) 它们的参数function的参数都是一样的：(item, index, array) array就是调用这个方法的数组实例。
+          那么我们只需要知道各个方法的含义和返回值这两个指标就可以知道它们的用法了，下面一一介绍
+          <br>
+          1.every 返回值：Boolean；含义：如果数组中每个元素均满足条件，则返回true，否则返回false。
+          <br>
+          2.some 返回值：Boolean；含义：如果数组中有某个元素满足条件，则返回true，否则返回false。
+          <br>
+          3.filter 返回值：Array；含义：返回原数组中满足条件的元素组成的新数组。（是为了去掉不必要的值）
+          <br>
+          4.map 返回值：Array；含义：返回原数组的每一项经过map参数指定的函数处理后的新数组。 (是为了改变值)
+          <br>
+          5.forEach 返回值：没有返回值；含义：对数组中的每一项应用forEach参数指定的函数。
+        
+      </p>
+    </div>
     <script>
         let array = [1,5,9,2,4,6];
-        document.write('<h2>原始for循环</h2>')
         for (var i = 0; i < array.length; i++) {
-            document.write(`<h3>索引号：${i}&nbsp;&nbsp;元素是==>${array[i]}</h3>`)
+            console.log(`%c 索引号：${i}元素是==>${array[i]}`, "color:blue;");
         }
         
-       // 用于遍历数组 让数组内的值执行fuction下的操作
        let arrayI = [];
-       document.write('<h2>forEach循环</h2>')
-       array.forEach((item,index,arr)=> {
-            console.log('当前的元素值==>'+item,'当前元素的索引值==>'+index);
+       let aa = array.forEach((item,index,arr)=> {
+           if (item === 1) {
+               console.log('哈哈哈哈',this);
+               return false;
+           }
+            console.log('当前元素值==>'+item,'当前元素的索引值==>'+index);
             console.log('传入的数组%c==>'+arr,"color:red;font-weight:bold;");
             arrayI.push(Math.pow(item,3))
         })
-        console.log(arrayI,'array');
+        console.log(arrayI,aa,'array');
         
         // 用于对传入的数组进行遍历 调用函数后返回返回一个新的数组
        let newArr = array.map((item,index,arr)=> {
@@ -31,8 +104,25 @@
        })
        console.log(newArr);
 
+      // 经典案例
+      // ['1','2','3','4'].map(parseInt)
+      // function returnInt(item) { 
+      //     return parseInt(item, 10)
+      //  }
+      // ['1','2','3','4'].map(returnInt)
+      // 或者
+      // ['1','2','3','4'].map(Number)
+      
+       // parseInt(string,radix) : 将字符串转换为数字类型 返回的是整数
+       // string:待被解析的字符串；
+       // radix:表示要解析转换的进制
+
+       // PS:（如果省略该参数或其值为 0，则数字将以 10 为基础来解析。如果它以 “0x” 或 “0X” 开头，将以 16 为基数。如果该参数小于 2 或者大于 36，则 parseInt() 将                返 回 NaN）；
+
        // 用于检测数组中的元素是否满足指定条件（函数提供）
        // 如果有一个元素满足条件，则表达式返回true , 剩余的元素不会再执行检测。
+
+       // 箭头函数中函数体只有一行代码，可以省略大扩号{}直接写表达示，同时将表达式的值默认为函数返回值，所以不需要写return。
        let mark = array.some((item,index,arr)=> {
             return item > 3
        })
@@ -47,32 +137,13 @@
        })
        console.log(markT);
 
-       // 注意：some 和 every 相反 前者是只要有一个满足条件 就返回true 后者是需要全部满足条件 才会返回true
+       // 注意：some 和 every 相反 some是只要有一个满足条件 就返回true every是需要全部满足条件 才会返回true
 
        // 方法创建一个新的数组，新数组中的元素是通过检查指定数组中符合条件的所有元素
        let newArray =  array.filter((item,index,arr)=> {
            return item > 2 && item < 9
        })
        console.log(newArray);
-       
-        // 这几个方法有一些共同点：
-
-        // a) 它们的参数都是一个function
-
-        // b) 它们的参数function的参数都是一样的：(item, index, array) array就是调用这个方法的数组实例。
-
-        // 那么我们只需要知道各个方法的含义和返回值这两个指标就可以知道它们的用法了，下面一一介绍
-
-        // every 返回值：Boolean；含义：如果数组中每个元素均满足条件，则返回true，否则返回false。
-
-        // some 返回值：Boolean；含义：如果数组中有某个元素满足条件，则返回true，否则返回false。
-
-        // filter 返回值：Array；含义：返回原数组中满足条件的元素组成的新数组。（是为了去掉不必要的值）
-
-        // map 返回值：Array；含义：返回原数组的每一项经过map参数指定的函数处理后的新数组。 (是为了改变值)
-
-        // forEach 返回值：没有返回值；含义：对数组中的每一项应用forEach参数指定的函数。
-        
 
         // indexOf 返回指定元素的索引值  如果没有的话就返回-1 搜索数组中的元素，并返回它所在的位置
         Array.prototype.indexOfCopy = function (value) { 
@@ -123,7 +194,6 @@
             }
         }
         console.log(arrayL);
-        document.write(`<h3>${arrayL}</h3>`)
         // ES6 提供三个新的方法 —— entries()，keys()和values() —— 用于遍历数组。它们都返回一个遍历器对象，
         // keys()是对键名的遍历、values()是对键值的遍历，entries()是对键值对的遍历
         for (let key of arrayL.keys()) {
@@ -138,30 +208,9 @@
         for (const [index,value] of arrayL.entries()) {
             console.log('打印键值：'+index,'打印value值==>'+value)
         }
-        
-        // 第二次提交内容至这个分支上
 
-        // 创建文件夹 mkdir 文件名
-        // 进入该文件夹 cd 文件名
-        // 通过命令 git init 把这个文件夹变成Git可管理的仓库 即初始化这个文件夹（生成的后缀为 .git文件夹 是Git用来跟踪和管理版本库）
-
-        // Changes to be committed: 表示刚才修改的部分已经被提交至暂存区
-        // Changes not staged for commit: 修改的内容未被提交至暂存区
-
-        // 将本地的仓库和远端的仓库进行关联：（这个时候在github上这个仓库还是空的）
-        // 查询 首先检查一下本地库中有没有已经关联的远程仓库 如果已经有了可以删除 或者可以重新建立一个 别重名 git remote -v
-        // 删除 如果发现关联了远程库 可以先删除这种关联 （要不然无法推送代码上去 删除关联）git remote remove origin
-        // 新建 git remote add origin 远程仓库的地址 (可以使用https或者ssh的方式新建)
-
-        // 将本地库的内容上传到远程库中 git push -u origin master 
-        // 由于新建的远程仓库是空的，所以要加上-u这个参数，等远程仓库里面有了内容之后，下次再从本地库上传内容的时候只需下面这样就可以了：
-        // git push origin master
-
-        // 第三次提交内容至这个分支上
-        // 解决GitHub提交历史头像不显示问题 发现邮箱名字和上传的邮箱名字不匹配导致
-        
-         // 通过 flag 来判断 和存储 只取 支付宝 微信 话费支付
-         let arrTemp = [
+        // 通过 flag 来判断 和存储 只取 支付宝 微信 话费支付
+        let arrTemp = [
             {
                 title: '钻石会员月包',
                 payments: [
@@ -244,27 +293,24 @@
                 ]
             }
         ];
+        
         console.log(arrTemp);
-        function diseposeModules(arr) {
-            let payTemp = [];
-            for (let i = 0; i < arr.length; i++) {
-                for (let j = 0; j < arr[i].payments.length; j++) {
-                    let payCode = arr[i].payments[j].code;
-                    let flag = false;
-                    if (payCode == 'ALI_PAY' || payCode == 'WEIXIN_PAY' || payCode == 'SUNNY_V6_MOBILE_BOSS' ) {
-                        flag = true;
-                        // break;
-                    }
-                    if (flag) {
-                        payTemp.push(arr[i].payments[j]);
-                    }
+        let payTemp = [];
+        for (let i = 0; i < arrTemp.length; i++) {
+            let flag = false;
+            for (let j = 0; j < arrTemp[i].payments.length; j++) {
+                let payCode = arrTemp[i].payments[j].code;
+                if (payCode == 'ALI_PAY' || payCode == 'WEIXIN_PAY' || payCode == 'SUNNY_V6_MOBILE_BOSS' ) {
+                    flag = true;
+                    break;
                 }
             }
-            console.log(payTemp);
-            return payTemp;
+            if (flag) {
+                payTemp.push(arrTemp[i]);
+            }
         }
-        diseposeModules(arrTemp)
-        
+        console.log(payTemp);
+        console.log(arrTemp === payTemp);
 
     </script>
 </body>

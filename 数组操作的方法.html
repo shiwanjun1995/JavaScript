@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>操作数组</title>
+  <style>
+    .content-box {
+        /* height: 100px;
+        line-height: 100px; */
+        text-align: center;
+        background-color: #09c;
+    }
+    sup {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <div class="content-box">
+    <h1>1.改变原数组的方法 9个</h1>
+    <b>ES5: pop() shift() push() unshift() reverse() splice() sort()</b>
+    <br>
+    <b>ES6: copyWithin() fill()</b>
+    <p>在数组的开头增加一个或者多个元素 unshift() <sup>返回了新的长度</sup></p>
+    <p>在数组的末尾增加一个或者多个元素 push() <sup>返回了新的长度</sup></p>
+    <p>删除数组首部元素 shift() <sup>返回了被删元素</sup></p>
+    <p>删除数组尾部元素 pop() <sup>返回了被删元素</sup></p>
+    <p>用于颠倒数组中元素的顺序 reverse() <sup>返回颠倒后的数组</sup></p>
+    <p>通过删除或替换现有元素或者原地添加新的元素来修改数组 splice()
+      <sup>
+        并以数组形式返回被修改的内容
+        1.可以添加多个元素；
+        2.操作的元素 包括开始的那个元素；
+        3.添加的元素 是在开始的那个元素前面添加的；
+      </sup>
+    </p>
+    <p>对数组进行排序 sort() 
+      <sup>
+        比较函数有两个参数 这两个参数是数组中需要比较的两个元素 一般用 a b 来接收
+        1.若比较函数返回值 < 0, 那么 a 将排在 b 的前面 ==> 升序
+        2.若比较函数返回值 > 0, 那么 b 将排在 a 的前面 ==> 降序
+        数组元素为数字的升序、降序
+      </sup>
+    </p>
+  </div>
+  
+
+  <div class="content-box">
+    <h1>2.不改变原数组的方法 8个</h1>
+    <b>ES5: join() tolLocateString() toString() slice() concat() indexOf() lastIndexOf()</b>
+    <br>
+    <p>将一个数组（或一个类数组对象）的所有元素转换成字符串，再用一个分隔符将这些字符串连接起来。 join() <sup>如果数组只有一个项目，那么将返回该项目而不使用分隔符。</sup></p>
+    <p>返回从startIndex开始(包括)，到endIndex(不包括)之间的元素组成的数组，且原数组不会被修改。slice() <sup>返回新数组，不改变原数组</sup></p>
+    <p>合并两个或者多个数组，返回新数组 concat() <sup>ES6扩展运算符 … 合并数组</sup> </p>
+    <p>返回在数组中可以找到一个给定元素的第一个索引，如果不存在，则返回-1。 indexOf() <sup>找第一个元素的索引值</sup></p>
+    <b>ES6: includes()</b>
+    <p>
+      返回一个布尔值，用于检验数组中是否包含给定的值
+      <sup>
+        该方法是为了弥补 indexOf() 方法的缺陷而出现的；
+        1.indexOf() 方法不能识别 NAN;
+        2.indexOf() 方法检查是否包含某个值不够语义化，需要判断是否不等于-1，表达不够直观；
+      </sup>
+    </p>
+  </div>
+
+  <div class="content-box">
+    <h1>3.遍历数组并不会改变原始数组的方法 12个</h1>
+    <b>ES5: forEach() map() every() some() filter() reduce() reduceRight()</b>
+    <br>
+    <b>ES6: find() findIndex() keys() values() entries()</b>
+    <p>用于找出第一个符合条件的数组成员，并返回该成员，如果没有符合条件的成员，则返回undefined。 find() <sup>找出符合条件的第一个元素并返回这个元素</sup></p>
+    <p>返回第一个符合条件的数组成员的位置，如果所有成员都不符合条件，则返回-1。<sup>这两个方法都可以识别NaN，弥补了indexOf的不足。</sup></p>
+  </div>
+  <script src="./utils.js"></script>
+
+  <script>
+  // 增 删 改
+
+  // 增
+  let arr1 = ['这','是','第','一','个','数','组'];
+  let _arr1 = utils.deepCopy(arr1);
+  let newLength = _arr1.unshift('在数组开头增加一个或者多个元素');
+  console.log(_arr1, newLength);
+  
+  let _arr2 = utils.deepCopy(arr1);
+  let _newLength = _arr2.push('在数组末尾增加一个或者多个元素');
+  console.log(_arr2, _newLength);
+
+  // 删
+  let arr2 = ['这','是','第','二','个','数','组'];
+  let _arr21 = utils.deepCopy(arr2);
+  let newItem = _arr21.shift()
+  console.log(_arr21, newItem);
+
+  let _arr22 = utils.deepCopy(arr2);
+  let _newItem = _arr22.pop();
+  console.log(_arr22, _newItem);
+
+  let arr3 = ['我','爱','你'];
+  let _arr3 = utils.deepCopy(arr3);
+  let reverseArr = _arr3.reverse(); 
+  console.log(arr3, _arr3, reverseArr);
+
+  // 改（可以添加 也可以删除 还可以替换）
+  let arr4 = [1,2,3,4,5,6,7,8,9];
+
+  // 1. 删除 返回子数组
+  let _arr41 = utils.deepCopy(arr4);
+  let spliceArr = _arr41.splice(0,3)
+  console.log(arr4, _arr41, spliceArr);
+
+  let _arr42 = utils.deepCopy(arr4);
+  // 从最后一个元素开始 删除1个元素 ==> 删除数组的最后一个元素  splice(-1,1);
+  // 从最后一个元素开始 删除3个元素 ==> 删除数组的最后一个元素  splice(-1,3);
+
+  // 上面的结果都是一样的 因为最后就一个元素 所以就删除了一个
+  // 以此类推 可删除数组的最后两项元素 splice(-2,2)
+  let _spliceArr = _arr42.splice(-1,1);
+  console.log(arr4, _arr42, _spliceArr);
+
+  // 2.替换 （从第几位开始删除多少个元素并且插入什么元素）
+  let _arr43 = utils.deepCopy(arr4);
+  // 从第0位开始删除3个元素并且插入'删除并添加字符串3'
+  let replaceArr = _arr43.splice(0,3,'删除并添加字符串3');
+  console.log(arr4, _arr43, replaceArr);
+
+  let _arr44 = utils.deepCopy(arr4);
+  let _replaceArr = _arr44.splice(2,1,'替换字符串3');
+  // 从第2位开始删除0个元素并且插入'替换字符串3' 
+  console.log(arr4, _arr44, _replaceArr)
+
+  let _arr45 = utils.deepCopy(arr4);
+  // 从第二位开始删除0个元素并且插入添加字符串3  被删除的元素: [], 没有元素被删除
+  let ___replaceArr = _arr45.splice(2,0,'添加字符串3');
+  console.log(arr4, _arr45, ___replaceArr);
+  
+  // 排序 (默认排序顺序是在将元素转换为字符串，然后比较它们的UTF-16代码单元值序列时构建的)
+
+  // 字符串排序
+  let arr5 = ['banana','watermelon','apple','cherry','orange'];
+  console.log(arr5.sort());
+
+  // 数字排序
+  let arr6 = [11,89,78,34,45,108];
+  let _arr61 = utils.deepCopy(arr6);
+  console.log(arr6, _arr61, _arr61.sort((a,b) => a -b));
+  let _arr62 = utils.deepCopy(arr6);
+  console.log(arr6, _arr62, _arr62.sort((a,b) => b -a));
+
+
+  // 数组转字符串
+  let arr7 = ['Spring','Summer','Autumn','Winter'];
+  let _arr71 = utils.deepCopy(arr7);
+  console.log(arr7, _arr71); // 默认使用逗号分隔
+  console.log(_arr71.join());
+  console.log(_arr71.join(','));
+  console.log(_arr71.join('')); // 空字符串
+  console.log(_arr71.join(' ')); // 空格
+
+  // 剪切 
+  let arr8 = ['这','个','数','组','用','于','剪','切'];
+  let _arr81 = utils.deepCopy(arr8);
+  console.log(arr8, _arr81);
+  console.log(_arr81.slice(0,3)); // 没有组
+  console.log(_arr81.slice());
+  console.log(_arr81[_arr81.length-1]);
+  console.log(_arr81.slice(0,_arr81.length -1));
+  console.log(_arr81 === _arr81.slice()); // false
+
+  // 拼接
+  let arr9 = [1,3,5,7,9];
+  let arr10 = [2,4,6,8,10];
+  let _arr9 = utils.deepCopy(arr9);
+  let _arr10 = utils.deepCopy(arr10);
+  console.log(arr9, _arr9, arr10, _arr10, _arr9.concat(_arr10));
+  console.log(arr9, _arr9, arr10, _arr10, [..._arr9, ..._arr10]);
+
+  // 返回在数组中可以找到一个给定元素的第一个索引，如果不存在，则返回-1。
+  let arr11 = ['这','个','数','组','用','于','找','索','引'];
+  let _arr11 = utils.deepCopy(arr11);
+  console.log(arr11, _arr11, _arr11.indexOf('a') != -1);
+
+  let arr12 = [1,2,2,3,4,5,7,9,9];
+  let _arr12 = utils.deepCopy(arr12);
+  let newArr = [];
+
+  // 应用：去重 判断是否存在 
+  _arr12.forEach(el => {
+    if (newArr.indexOf(el) === -1) {
+      newArr.push(el)
+    }
+  });
+
+  // for (let i = 0; i <_arr12.length; i++) {
+    //   if (newArr.indexOf(_arr12[i]) === -1) {
+      //     newArr.push(_arr12[i])
+      //   }
+      // }
+
+  console.log(arr12, _arr12, newArr);
+  console.log(Array.from(new Set(_arr12)));
+
+
+  let arr13 = [1,4,-5,10];
+  let _arr13 = utils.deepCopy(arr13);
+  console.log(arr13, _arr13, _arr13.find(v => v < 0));
+  console.log(arr13, _arr13, _arr13.findIndex(v => v < 0));
+
+  // 判断元素是否存在
+  // 如果是简单数组（非对象数组） 则可以使用 Array.includes();
+  // 如果是对象数组 则可以使用 Array.some();
+
+  let arr14 = [1,2,3];
+  let _arr14 = utils.deepCopy(arr14);
+  console.log(arr14, _arr14, _arr14.includes(1));
+
+  let arr15 = [
+    {
+      id: 1,
+      value: '张三'
+    }, {
+      id: 10,
+      value: '李四'
+    }, {
+      id: 5,
+      value: '王五'
+    },
+  ]
+
+  let _arr15 = utils.deepCopy(arr15);
+  console.log(arr15, _arr15, _arr15.some(el => el.value === '王五'));
+
+  // 用来判断一个元素是否为数组
+  let arr16 = [1,2];
+  let _arr16 = {
+    id: 19,
+    value: '值'
+  };
+  console.log(Array.isArray(arr16));
+  console.log(Array.isArray(_arr16));
+  
+
+  </script>
+</body>
+</html>
