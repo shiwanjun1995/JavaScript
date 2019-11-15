@@ -70,6 +70,7 @@
   <div class="content-box">
     <h1>3.遍历数组并不会改变原始数组的方法 12个</h1>
     <b>ES5: forEach() map() every() some() filter() reduce() reduceRight()</b>
+    <p>reduce() 方法对累加器和数组中的每个元素（从左到右）应用一个函数，最终合并为一个值。</p>
     <br>
     <b>ES6: find() findIndex() keys() values() entries()</b>
     <p>用于找出第一个符合条件的数组成员，并返回该成员，如果没有符合条件的成员，则返回undefined。 find() <sup>找出符合条件的第一个元素并返回这个元素</sup></p>
@@ -242,7 +243,18 @@
   };
   console.log(Array.isArray(arr16));
   console.log(Array.isArray(_arr16));
-  
+
+  let arr17 = [5,10,15,20,25,30];
+  let _arr17 = utils.deepCopy(arr17);
+  // total 初始值 或者上一次调用回调函数返回的值
+  // currentVaule 当前数组元素的值
+  // reduce(total,currentVaule)
+  console.log(arr17, _arr17, _arr17.reduce((prev,cur) => prev + cur));
+
+  // 将二维数组转化为一维 将数组元素展开
+  // let flattened = [[0, 1], [2, 3], [4, 5]].reduce((a, b) => a.concat(b),[]);
+  let flattened = [[0, 1], [2, 3], [4, 5]].reduce((a, b) => a.concat(b));
+  console.log(flattened);
 
   </script>
 </body>
