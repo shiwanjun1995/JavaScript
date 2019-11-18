@@ -158,8 +158,8 @@
   let _arr71 = utils.deepCopy(arr7);
   console.log(arr7, _arr71); // 默认使用逗号分隔
   console.log(_arr71.join());
-  console.log(_arr71.join(','));
-  console.log(_arr71.join('')); // 空字符串
+  console.log(_arr71.join(',')); // 上面两个返回的结果相等
+  console.log(_arr71.join('')); // 空字符串 如果separator是空字符串("")，则所有元素之间都没有任何字符。
   console.log(_arr71.join(' ')); // 空格
 
   // 剪切 

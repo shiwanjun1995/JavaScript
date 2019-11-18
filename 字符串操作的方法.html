@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>操作字符串</title>
+  <style>
+    .content-box {
+      text-align: center;
+      background-color: #cff;
+    }
+  
+  </style>
+</head>
+<body>
+  <div class="content-box">
+    <h2>1.返回指定位置的字符 charAt()</h2>
+    <p>第一个字符位置为0，第二个字符位置为1.以此类推</p>
+  </div>
+
+  <div class="content-box">
+    <h2>2.连接两个或多个字符串 concat()</h2>
+    <p>该方法没有改变原有字符串，但是会返回连接两个或多个字符串新字符串。</p>
+  </div>
+
+  <div class="content-box">
+    <h2>3.返回某个指定的字符在字符串中首次出现的位置 indexOf()</h2>
+    <p>如果没有找到匹配的字符则返回-1 该方法区分大小写</p>
+  </div>  
+  
+  <div class="content-box">
+    <h2>4.用于判断字符串是否包含指定的子字符串 includes()</h2>
+    <p>如果找到匹配的字符串则返回true 找不到就返回false 该方法区分大小写</p>
+  </div>
+
+  <div class="content-box">
+    <h2>5.检查一个字符串匹配一个正则表达式内容，如果么有匹配返回 null。 match()</h2>
+    <p>match的参数一般为正则表达式 找到一个或多个正则表达式的匹配。将返回一个数组，其中存放了与它找到的匹配文本有关的信息</p>
+  </div>
+
+  <div class="content-box">
+    <h2>6.用于在字符串中用一些字符替换另一些字符，或替换一个与正则表达式匹配的子串。 replace()</h2>
+    <p>replace的参数一般为正则表达式 找到一个或多个正则表达式的匹配。将返回一个新的字符串，是用 replacement 替换了 regexp 的第一次匹配或所有匹配之后得到的。</p>
+  </div>
+
+  <div class="content-box">
+    <h2>7.用于检索字符串中指定的子字符串，或检索与正则表达式相匹配的子字符串。 如果没有找到任何匹配的子串，则返回 -1。 search()</h2>
+    <p>search的参数一般为正则表达式 返回与指定查找的字符串或者正则表达式相匹配的 String 对象起始位置。</p>
+  </div>
+
+  <div class="content-box">
+    <h2>8.可提取字符串的某个部分，并以新的字符串返回被提取的部分。 slice()</h2>
+    <p>使用 start（包含） 和 end（不包含） 参数来指定字符串提取的部分。</p>
+  </div>
+
+  <div class="content-box">
+    <h2>9.用于把一个字符串分割成字符串数组。 split()</h2>
+    <p>该方法不改变原始字符串。</p>
+  </div> 
+  
+  <div class="content-box">
+    <h2>10.从起始索引号提取字符串中指定数目的字符。 substr()</h2>
+    <p>substr() 的参数指定的是子串的开始位置和长度，因此它可以替代 substring() 和 slice() 来使用。</p>
+  </div>
+
+  <div class="content-box">
+    <h2>11.用于提取字符串中介于两个指定下标之间的字符。 substring()</h2>
+    <p>返回的子串包括 开始 处的字符，但不包括 结束 处的字符。</p>
+  </div>
+
+  <div class="content-box">
+    <h2>12.用于删除字符串的头尾空格。 trim()</h2>
+    <p>不会改变原始字符串。</p>
+  </div>
+
+  <div class="content-box">
+    <h2>补充：将其他类型转换为string的三种方法</h2>
+    <p>
+      1.toString()方法 null和undefined这两个值没有tostring()方法；
+      2.调用String()函数 不过string()函数可以转换null和undefined；
+      3.使用隐式（运算符）转换 + "" 但是可读性较差;
+    </p>
+  </div>
+
+  <script>
+    let string1 = 'hello pig';
+    console.log(string1.charAt(6));
+    console.log(string1[6]);
+    
+    let string2 = '你好';
+    let string3 = '猪';
+    console.log(string2.concat(string3));
+
+    let string4 = '这是第四个字符串';
+    console.log(string4.indexOf('四'));
+
+    let string5 = '这是第五个字符串';
+    console.log(string5.includes('五'));
+
+    let string6 = '这是第六个字符串六六六';
+    console.log(string6.match(/六/g));
+
+    let string7 = '这是第七个字符串六六六';
+    // 所有的 "六" 被找到，都被统一替换为" 七"
+    console.log(string7.replace(/六/g, '七'));
+    //执行一次替换，当第一个 "六" 被找到，它就被替换为 "七"：
+    console.log(string7.replace('六','七'));
+
+    let string8 = '这是第八个字符串';
+    console.log(string8.search('八'));
+
+    let string9 = '这是第九个字符串';
+    console.log(string9.slice(3));
+    // 起始和结束位置 [)
+    console.log(string9.slice(0,3));
+
+    let string10 = '这是第十个字符串';
+    //  如果把空字符串 ("") 用作 separator，那么 stringObject 中的每个字符之间都会被分割。
+    console.log(string10.split(''));
+    // 把字符串分割成数组
+    console.log(string10.split(','));
+    console.log(string10.split(' '));
+
+    let string11 = '这是第十一个字符串';
+    console.log(string11.substr(3));
+    console.log(string11.substr(3,1));
+    
+    let string12 = '这是第十二个字符串';
+    console.log(string12.substring(3));
+    console.log(string12.substring(3,5));
+
+    let string13 = ' 这是第十三个字符串 ';
+    console.log(string13.trim());
+
+    let string14 = 'ABCDEFG';
+    console.log(string14.toLowerCase());
+
+    let string15 = 'hijklmn';
+    console.log(string15.toUpperCase());
+    
+    let num = 123666;
+    console.log(num.toString());
+    // console.log(null.toString(), undefined.toString());
+
+    console.log(String(num));
+    console.log(String(null),String(undefined));
+
+    // 任何值和字符串做加法，都会将其转换为字符串，而后做拼接
+    // 可以利用这个特点，将任意数据类型转换为string，只 +""
+    console.log(num + '');
+    console.log(null + '', undefined + "");
+
+    // 阿里面试-字符串操作
+    let strLast = "www.taobao.com"; 
+    let res = strLast.split("").reverse().join("").replace('oat',''); 
+    // strLast.split("") = ["w", "w", "w", ".", "t", "a", "o", "b", "a", "o", ".", "c", "o", "m"]
+    // .reverse().join("") = "moc.oaboat.www"
+
+    // join() 数组的方法 如果separator是空字符串("")，则所有元素之间都没有任何字符。
+    console.log(res); //moc.oab.www 
+  </script>
+</body>
+</html>
