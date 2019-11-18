@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>操作number</title>
+  <style>
+      .content-box {
+        text-align: center;
+        background-color: cyan;
+      }
+    </style>
+</head>
+<body>
+  <div class="content-box">
+    <h2>函数把对象的值转换为数字。 Number()</h2>
+    <p>返回转换后的数字，如果不能转为数字则返回NaN；</p>
+  </div>
+  
+  <div class="content-box">
+    <h2>可解析一个字符串，并返回一个浮点数。 parseFloat()</h2>
+    <p>该函数指定字符串中的首个字符是否是数字。如果是，则对字符串进行解析，直到到达数字的末端为止，然后以数字返回该数字，而不是作为字符串。 字符串中只返回第一个数字。</p>
+  </div>
+
+  <div class="content-box">
+    <h2>将给定的值解析成整数； parseInt()</h2>
+    <p>只有字符串中的第一个数字会被返回。 有两个参数 parseInt(string, radix) radix: 可选。表示要解析的数字为什么进制</p>
+  </div>
+
+  <div class="content-box">
+    <h2>向下取整 floor()</h2>
+    <h2>向上取整 ceil()</h2>
+    <h2>四舍五入 round()</h2>
+    <h2>四舍五入为指定小数位数的数字 toFixed()</h2>
+  </div>
+
+  <div class="content-box">
+    <h2>用来判断传入的参数值是否是NaN Number.isNaN()</h2>
+    <p>返回布尔值</p>
+  </div>
+
+  <div class="content-box">
+    <h2>格式化一个number实例为字符串表示形式 toString()</h2>
+    <p>返回格式化后的字符串</p>
+  </div>
+
+  <script>
+    let num1 = '666';
+    // 要把其他数据类型转换成number时，首先会调用toString； 隐式转换
+    // Number()只能处理标准数字格式(兼容前后置的空格)的字符串为数字
+    console.log(Number(num1), Number({}));
+
+    let num2 = '1.66&%NMNM';
+    console.log(parseFloat(num2));
+
+    let num3 = '1.66666';
+    console.log(parseInt(num3, 10));
+    console.log(parseInt(num3,2));
+
+    let num4 = 5.65;
+    console.log(Math.floor(num4));
+    console.log(Math.ceil(num4));
+    console.log(Math.round(num4));
+    console.log(num4.toFixed(1));
+
+    console.log(Number.isNaN(2));
+    console.log(Number.isNaN(NaN));
+    console.log(Number.isNaN(true));
+
+    let num5 = 999;
+    console.log(num5, num5.toString());
+
+  </script>
+</body>
+</html>
