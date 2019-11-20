@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>判断数据类型</title>
+  <style>
+    .content-box {
+      height: 300px;
+      background-color: #cfc;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="content-box">
+    <h2>6种基本数据类型</h2>
+    <p>1.undefined 表示一个变量自然的，最原始的状态值（字面意思就是未被定义的值=>>>例如声明了一个变量但未赋值，访问对象不存在某个属性）</p>
+    <p>2.null表示一个变量被人为的设置为空对象，而不是最原始的状态（字面意思是空值=>>>如果需要释放某个对象，就将变量设置为null，即表示该对象已经被清空，目前无效状态。）</p>
+    <p>3.string 字符串类型</p>
+    <p>4.number 数字类型</p>
+    <p>5.boolean 布尔类型</p>
+    <p>6.object 对象类型</p>
+  </div>
+
+  <div class="content-box">
+    <h2>3大引用类型</h2>
+    <p>1.Object类型</p>
+    <p>2.Array类型</p>
+    <p>3.Function类型</p>
+  </div>
+
+  <script>
+  // 5种基本数据类型
+  var string = '字符串';
+  var number = 123;
+  var boolean = true;
+  var undefined = undefined;
+  var Null = null;
+
+  var object = new Object();
+
+  // typeof 用于检测简单数据类型
+  console.log(typeof(string));
+  console.log(typeof(number));
+  console.log(typeof(boolean));
+  console.log(typeof(undefined));
+  console.log(typeof(Null)); // null类型被当做一个空对象引用。空对象的指针
+  console.log(typeof(object));
+
+  // toString 该方法返回 [object type] 其中type 就是对象的类型
+  // 但是默认情况下，toString()方法会被每个Object重写，比如数组的toString就被重写成了
+  console.log(typeof(['大','猪'].toString()));
+  console.log(typeof(['大', '猪']));
+
+  // 为了避免使用到被重写的toString()方法，可以用一个新的自定义的对象，他的toString()方法是没有被重写的
+  console.log({}.toString())
+
+  // 原理：通过Object原型上的toString()方法可以获取到js中对象的真实数据类型
+  function getType (n) {
+    return  Object.prototype.toString.call(n).match(/\s([a-zA-Z]+)/)[1].toLowerCase()
+  }
+
+  function getTypeEmpty (n) {
+    return {}.toString.call(n)
+  }
+
+
+  console.log(getType(string));
+  console.log(getType(number));
+  console.log(getType(boolean));
+  console.log(getType(undefined));
+  console.log(getType(Null));
+  console.log('用一个新的自定义的对象',getTypeEmpty(Null));
+  console.log(getType(object));
+  console.log(getType([]));
+  console.log(getType(function(){}));
+  console.log(getType(new Date()));
+  console.log(getType(/\s/));
+
+  console.log({}.toString.call('字符串').match(/\s([a-zA-Z]+)/)[1]);
+  </script>
+</body>
+</html>

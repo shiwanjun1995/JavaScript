@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 四种方式
+    // 1.new关键字 2.对象字面量{} 3.工厂函数 4.自定义构造函数
+    var obj1 = new Object();
+    var obj2 = {};
+
+    /**
+     * @param sex string
+     * @param name string
+     * @param age number
+     * @returns {{}} object
+     */
+    function createStudent(sex,name,age) {
+      var stu = {};
+      stu.sex = sex;
+      stu.name = name;
+      stu.age = age;
+
+      return stu;
+    }
+
+    console.log(typeof createStudent('男', '大猪', 19));
+    console.log(createStudent('女', '小猪', 18).constructor.name);
+
+    // 自定义一个 人函数 构造一个对象 并且返回函数
+    // 调用构造函数 并且new这个构造函数 后台会隐式执行new Object() 创建对象
+    // 创建对象时初始化对象， 即为对象成员变量赋初始值
+    /**
+     *
+     * @param tall
+     * @param height
+     * @param age
+     * @constructor
+     */
+    function Person(tall,height,age) {
+      // 对象的属性
+      this.tall = tall;
+      this.height = height;
+      this.age = age;
+      // 对象的方法
+      this.sayGoodbye = function () {
+        console.log('拜拜，我是'+this.tall);
+      }
+    }
+
+    // new在执行的时候会执行的四件事情
+    // 1.在内存开辟一块空间 存储新创建的对象 对象是Person
+    // 2.让this指向这个新的对象
+    // 3.执行构造函数内部的代码 给这个对象增加属性和方法
+    // 4.返回新创建的这个对象
+
+    var p1 = new Person(178,75,25);
+    p1.sayGoodbye();
+
+
+    // 遍历对象
+    var obj = {
+      name: '石头',
+      sex: '男',
+      gender: 25,
+      tall: 175,
+    };
+
+    // key:键 obj[key]:值
+    delete obj.name;
+
+    for (var key in obj) {
+      console.log(key + '==>' + obj[key]);
+    }
+
+    // 变量在存储简单数据类型的时候 ==> 存的就是值本身
+    // 变量在存储复杂数据类型的时候 ==> 存的是引用 （地址）
+
+    var p = {
+      name:"zs",
+      age:18
+    }
+    function fn(person) {
+      person.name = 'ls';
+      console.log(person.name);
+    }
+    fn(p);
+    console.log(p.name);
+    // 复杂类型：变量在存储的时候 不会对整个变量进行存储 而是对整个对应的一个地址 开辟一块空间用来存储
+    // 如果把一个对象赋值给另外一个变量 只会对地址进行赋值 此时两个变量指向同一个对象
+
+
+
+  </script>
+</body>
+</html>
