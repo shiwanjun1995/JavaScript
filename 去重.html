@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>去重的方法</title>
+  <style>
+    .content-box {
+      background-color: #cff;
+      text-align: center;
+    }
+
+    sub {
+      color: #f40;
+    }
+
+    h1 {
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>数组的去重方法</h1>
+  <div class="content-box">
+    <h2>1.数组的去重 Set()</h2>
+    <sub>新数据结构Set 类似于数组 但成员值不重复</sub>
+  </div>
+
+  <h1>数组对象如何去重</h1>
+  <div class="content-box">
+    <h2>2.数组对象去重 reduce()</h2>
+    <sub>接收一个函数最为累加器 数组中的每个值从左到右开始合并 最后返回一个值</sub>
+    <p>reduce() 其实也就是对数组从左至右进行遍历 在遍历的同时按照回调函数中的方法进行处理 其特别之处就在于它每次遍历一个元素后就会将这个元素放在累加器中累积起来 类似于收割机收小麦一样 从左至右收割
+      收割机中用来放收割好小麦的地方就类似于readuce()的累加器 最后满满收好的一大袋小麦就类似于reduce()的返回值</p>
+  </div>
+
+  <script>
+    let arr1 = ['大', '大猪', '大小', '大', '大小', '猪', 1, 22, 33, 22, 1, 6, 8, 88, 33];
+    // 数组转set
+    // new Set() 接受一个数组或类数组对象 
+    let set = new Set(arr1);
+
+    console.log(arr1);
+    // set 自带去重
+    console.log([...set]);
+    // set转array
+    // 把类数组对象或可迭代对象转化为数组 （创建一个新的浅拷贝数组实例）
+    console.log(Array.from(set));
+
+    // 对象的属性不会重复 （把数组的值作为对象的键）
+    let obj = {};
+    let newArr = [];
+    // arr1.forEach(v => {
+    //   if (!obj[v]) {
+    //     // 给对象的某个属性赋值 赋不赋值无所谓 赋成多少都可以 一般为1
+    //     obj[v] = 1;
+    //     newArr.push(v);
+    //   }
+    // })
+    for (let i = 0; i < arr1.length; i++) {
+      if (!obj[arr1[i]]) {
+        obj[arr1[i]] = '随便赋值'
+        // debugger
+        newArr.push(arr1[i])
+      }
+    }
+    console.log('去重后的结果>>>', newArr);
+
+    // 如何将下面data数组中id重复的数据去掉？
+    let data = [{
+        id: 201801,
+        name: '张三',
+        age: 15,
+      },
+      {
+        id: 201804,
+        name: 'John',
+        age: 18,
+      },
+      {
+        id: 201802,
+        name: '李四',
+        age: 18,
+      },
+      {
+        id: 201801,
+        name: '张三',
+        age: 15,
+      },
+      {
+        id: 201805,
+        name: 'Jack',
+        age: 18,
+      },
+      {
+        id: 201803,
+        name: '王五',
+        age: 10,
+      },
+      {
+        id: 201805,
+        name: 'Jack',
+        age: 18,
+      },
+      {
+        id: 201804,
+        name: 'John',
+        age: 18,
+      },
+      {
+        id: 201805,
+        name: 'Jack',
+        age: 18,
+      },
+    ];
+
+    // 1.两个for循环 将数组的每一个元素和剩余元素进行一一比较 如果发现在剩余元素出现id相同的项 就利用splice() 方法删除这一项 
+    // 但是这个方法删除的话 会改变数组的长度 所以需要让当前索引 --
+    // function removeRepeat(arr, key) { 
+    //   for (let i = 0; i < arr.length; i++) {
+    //     for (let j = i + 1; j < arr.length; j++) {
+    //       if (arr[i][key] === arr[j][key]) {
+    //         arr.splice(j,1)
+    //         j--;
+    //       }
+    //     }
+    //   } 
+    //  }
+
+    //  removeRepeat(data, 'id')
+    
+    // 2.通过reduce() 方法的累积器作用 在对数组对象进行遍历的时候 通过hash对象标记 数组中 每个元素id是否出现过
+    // 如果没有 当前遍历到的元素就会放到累加器中 否则不会放入
+    
+    let hash = {};
+    data = data.reduce((pre,curr) => {
+      hash[curr.id] ? '' : hash[curr.id] = true && pre.push(curr);
+      return pre
+    }, [])
+
+    // 上面的 [] 表示初始值    
+     console.log('>>>',data, hash);
+
+    // 参考链接: 1.https://www.jianshu.com/p/5c672a7a8b0b 2.https://blog.csdn.net/xum222222/article/details/80657316
+  </script>
+</body>
+
+</html>
