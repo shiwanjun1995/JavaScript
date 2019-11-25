@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .content-box {
+      height: 300px;
+      text-align: center;
+      background-color: #cff;
+    }
+  </style>
+</head>
+<body>
+  <div class="context-box">
+    <h1>栈：自动分配相对固定大小的内存空间 并由系统自动释放</h1>
+    <p>栈内存主要用于存储各种基本类型的变量 包括 string number null undefined boolean 以及对象变量的指针</p>
+    <span>这时候栈给人的感觉就像一个线性排列的空间 每个小单元大小基本相等 栈内存中的变量一般都是已知大小或者范围上限的数值 算作一种简单存储</span>
+  </div>
+  <div class="content-box">
+    <h1>堆：动态分配内存 内存大小不一 也不会自动释放</h1>
+    <p>堆内存主要负责像Object对象这种变量类型的存储 对内存存储的对象类型数据对于大小这方面 一般都是未知的</p>
+    <span>所以这大概也是为什么null作为一个object类型的变量却存储于栈内存中的原因</span>
+  </div>
+  <h1>总结：
+    <span>1.普通变量的值类型是基本数据类型 指向栈内存中的一块地址</span>
+    <span>2.引用类型变量的值是指针 指向堆内存中的一块地址</span>
+    <span>3.const实际上保证的 并不是变量的值不得改动 而是变量指向的那个内存地址不得改动</span>
+  </h1>
+  <script>
+  var arr1 = [1,2,3,4];
+  var arr2 = arr1; // 赋值给arr2的时候 传的是栈中的地址 相当于新建了一个不同名的指针 而不是堆内存中对象的值
+  var str1 = arr1[2]; // str1得到的是一个基本类型的赋值 str1仅仅是从arr1堆内存中获取了一个数值 并直接保存在栈中
+  arr2[4] = 99; // arr1 arr2 都指向同一块堆内存 arr2在修改堆内存的时候 也是会影响到arr1
+  str1 = 6; // str1是直接在栈中修改 并不会影响到arr1堆内存中的数据
+  
+  const b = {
+      name:'jack'
+  };
+  b.name = 'tom';
+  console.log(b);
+
+  // 参考地址： https://www.cnblogs.com/eco-just/p/11119830.html
+  
+  </script>
+</body>
+</html>
