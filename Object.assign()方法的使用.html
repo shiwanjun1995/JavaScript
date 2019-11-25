@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Object.assign() 方法简介</title>
+  <style>
+    .content-box {
+      height: 300px;
+      background-color: #cff;
+    }
+    sup {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h2>Object.assign() 方法用于将所有可枚举属性的值从一个或多个源对象复制到目标对象。它将返回目标对象。</h2>
+  <p>这里也涉及到一个深拷贝和浅拷贝的概念。javascript中存储对象都是存地址的，所以浅拷贝是都指向同一块内存区块，而深拷贝则是另外开辟了一块区域。</p>
+  <div class="content-box">
+    <h3>使用场景</h3>
+    <p>1.合并多个对象 <sup>如果目标对象与源对象有同名属性 则后面的属性会覆盖前面的属性 直接替换 const merge = (target,...source) => Object.assign(target,...sources)</sup></p>
+    <p>2.复制一个对象 <sup>深拷贝存在的问题应该使用具体的方法 拷贝的是属性值 如果源对象的属性值是一个对象的引用 那么它也指向那个引用 只是copy对象的地址值(引用)</sup></p>
+    <p>3.为属性指定默认值 <sup>一般在接口调用传默认参数的时候</sup></p>
+    <p>4..为了将对象的混入 (mixin) 混入是指的在一个对象中引用另一个对象的属性或方法 assing可以把一个对象的属性和方法完整的转copy到另外一个对象中</p>
+  </div>
+  
+  <script>
+    // 1.合并多个对象
+    const target = {
+      a: 1,
+      b: 2
+    };
+    const source = {
+      b: 3,
+      d: 4
+    };
+    const source1 = {
+      b: 30,
+      d: 40
+    };
+    const source2 = {
+      b: 300,
+      d: 400,
+      e: 500
+    };
+
+    const returnTarget = Object.assign(target,source);
+    // 有重复的属性 会被替换 而不是添加
+    console.log('源目标对象',target);
+    console.log('返回的目标对象',returnTarget);
+
+    const merge = Object.assign(target, source1, source2);
+    console.log('合并后的对象',merge);
+
+    const obj = {
+      c: '值'
+    };
+
+    let dui1 = {
+      ff: 999
+    }
+
+    let obj1 = {
+      e: 1,
+      f: dui1
+    }
+
+    let obj2 = Object.assign({},obj1);
+    // let obj2 = obj1;
+
+    let dui2 = {
+      ff: 222
+    }
+
+    // obj1.f = dui2;
+    // obj1.e = 2;
+    // console.log(obj1.f === obj2.f);
+    // console.log(obj1.e === obj2.e);
+    // console.log(obj1.f);
+    // console.log(obj2.f);
+
+    console.log(obj1 === obj2);
+
+
+    // 2.复制一个对象
+    let obj3 = {
+      name: '石头',
+      age: 25
+    }
+
+    // 将源对象拷贝到一个空对象 就得到了原始对象的克隆
+    let objClone = Object.assign({},obj3);
+    console.log('克隆的对象',objClone);
+    
+    // 3.为属性指定默认值
+    let DEFAULTS = {
+      pageCur: 1, // 分页页码
+      pageSize: 20 // 分页大小
+    }
+
+    // 上面代码中，DEFAULTS对象是默认值，options对象是用户提供的参数。
+    // Object.assign方法将DEFAULTS和options合并成一个新对象，如果两者有同名属性，则option的属性值会覆盖DEFAULTS的属性值。
+    // 注意，由于存在深拷贝的问题，DEFAULTS对象和options对象的所有属性的值，都只能是简单类型，而不能指向另一个对象。否则，将导致DEFAULTS对象的该属性不起作用。
+    function doSome(options) {
+      options = Object.assign({},DEFAULTS, options);
+      console.log('外部传入的参数',options);
+    }
+    doSome({pageCur: 2})
+  </script>
+</body>
+</html>
