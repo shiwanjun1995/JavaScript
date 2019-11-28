@@ -66,6 +66,10 @@
     return {}.toString.call(n)
   }
 
+  function getTypeReg(n) { 
+    return (/^\[object\s(.*)\]$/.exec(Object.prototype.toString.call(n)))[1]
+   }
+
 
   console.log(getType(string));
   console.log(getType(number));
@@ -80,6 +84,10 @@
   console.log(getType(/\s/));
 
   console.log({}.toString.call('字符串').match(/\s([a-zA-Z]+)/)[1]);
+
+  console.log(getTypeReg({}));
+
+  // 参考链接： https://www.jianshu.com/p/53f9cf53c9da
   </script>
 </body>
 </html>
