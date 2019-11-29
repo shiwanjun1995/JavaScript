@@ -1,0 +1,28 @@
+
+{
+  "comment": "这个是注释 利用以下快捷键快速生成代码（注意选择的语言模式） 如果有必要，在JSON数据说明文档告诉使用此JSON数据的客户端：在解析数据时忽略comment数据元素。",
+	"获取接口数据O": {
+		"prefix": "co",
+		"body": [
+			"console.log('%coooooo','color:green;font-size:48px;');",
+			"console.log(res);",
+			"$1"
+		]
+	},
+	"获取接口数据C": {
+		"prefix": "cx",
+		"body": [
+			"console.log('%cxxxxxx','color:red;font-size:48px;');",
+			"console.log(res);",
+			"$1"
+		]
+	},
+	"获取接口数据COX": {
+		"prefix": "cox",
+		"body": [
+			"console.log('%coxoxox','color:red;font-size:48px;');",
+			"console.log(res);",
+			"$1"
+		]
+	}
+}
