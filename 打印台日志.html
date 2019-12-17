@@ -6,9 +6,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>打印台彩色信息</title>
+  <style>
+    #box {
+      width: 200px;
+      height: 200px;
+      border: 2px solid #0fc;
+      margin: 0 auto;
+    }
+
+    #boxx {
+      width: 300px;
+      height: 300px;
+      border: 3px solid #0fc;
+      margin: 10px auto;
+    }
+  </style>
 </head>
 
 <body>
+  <div id="box"></div>
+  <div id="boxx"></div>
   <script>
     "use strict";
 
@@ -58,6 +75,31 @@
     }
     console.log.apply(console,arr)
 
+    // 随机颜色
+    // Math.random()生成的值在 [0,1)
+    function randomColor () {
+      var r,g,b,a;
+      r = Math.floor(Math.random()*256);
+      g = Math.floor(Math.random()*256);
+      b = Math.floor(Math.random()*256);
+      a = Math.floor(Math.random()*2);
+      return `rgba(${r},${g},${b},${a})`
+    }
+    
+    console.log('%cxxxxxx','color:red;font-size:48px;');
+    console.log(randomColor());
+
+    
+    
+    
+    var box = document.querySelector('#box');
+    var boxx = document.querySelector('#boxx');
+    box.style.backgroundColor =  randomColor()
+    boxx.style.backgroundColor =  `rgba(${Math.random().toFixed(3) * 1000},${Math.random().toFixed(3) * 1000},${Math.random().toFixed(3) * 1000},1)`
+    console.log('%coooooo','color:green;font-size:48px;');
+    console.log(`rgba{${Math.random().toFixed(3) * 1000},${Math.random().toFixed(3) * 1000},${Math.random().toFixed(3) * 1000},1}`);
+
+    
     // 参考链接：https://blog.csdn.net/TXX_c/article/details/83622139
 
   </script>
