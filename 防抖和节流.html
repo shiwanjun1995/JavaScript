@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>防抖和节流</title>
+  <style>
+    .content-box {
+      height: 300px;
+      background-color: #cff;
+    }
+    .content-container {
+        height: 1000px;
+        background-color: rgba(53, 51, 51, 0.7);
+    }
+    .img-box {
+        width: 200px;
+        margin: 0 auto;
+        height: 200px;
+        animation: loading 2s linear 0s infinite normal none running;
+    }
+    .img-box img {
+        width: 100%;
+    }
+    @keyframes loading {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+  </style>
+</head>
+<body>
+    <h1>场景</h1>
+    <span>一个大型后台系统 用户在搜索框内输入需要查询的字段信息
+        查询的时候就去请求后台返回的数据的话 这样多次输入就会频繁
+        地去请求ajax 就会造成卡顿 因为用户输入具有连续性 可以等用户
+        在输入停顿的时候去请求数据</span>
+    <div class="content-box">
+            <h2>1.防抖：</h2>
+            <p>抖动停止后的时间超过设定的时间后执行一次函数</p>
+        <input type="text" id="ipt" /><br>
+        <input type="text" id="ipt2" /><br>
+    </div>
+    <div class="content-container">
+        小风车
+        <div class="img-box">
+            <img src="./imgs/fenche.png" class="loading">
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var ipt = document.getElementById('ipt');
+        var ipt2 = document.getElementById('ipt2');
+        // function ajaxGetData() {
+        //     console.log('%c🐖🐖🐖🐖🐖🐖','color:#008B45;text-shadow:5px 5px 2px #fff, 5px 5px 2px #373E40, 5px 5px 5px #A2B4BA, 5px 5px 10px #82ABBA;font-weight:bolder;font-size:20px');
+        //     console.log('去请求ajax的数据');
+        // };
+        ajaxGetData = (_ => {
+            console.log('%c🐖🐖🐖🐖🐖🐖','color:#008B45;text-shadow:5px 5px 2px #fff, 5px 5px 2px #373E40, 5px 5px 5px #A2B4BA, 5px 5px 10px #82ABBA;font-weight:bolder;font-size:20px');
+            console.log('去请求ajax的数据');
+        })
+        // 这样在输入的一瞬间就会立即执行这个函数 这是不必要的
+        ipt.addEventListener('input', ajaxGetData, false);
+
+        // fn 为传入的函数 wait 为设定的时间间隔
+        /**
+        * 节流函数在首次执行的时候 会把定时器赋值给一个变量
+        * 第二次执行的时候 如果间隔没有超过定时器设定的时间则会清除掉定时器 并重新设置定时器 依次重复
+        * 当用户停止操作的时候 不会清除定时器 超过一定时间后执行回调函数
+        */
+
+        // 第一版 this指向的是 window
+        function debounceDZ1(fn, wait) {
+            var timer = null;
+            return function () {
+                if (timer) clearTimeout(timer);
+                console.log(this);
+                    timer = setTimeout(fn, wait);
+            }
+        }
+
+        // 第二版 绑定上下文this 并且可拿到事件对象 event
+        function debounceDZ2(fn, wait) {
+            var timer = null;
+            return function() {
+                if (timer) clearTimeout(timer);
+                console.log(this);
+                    timer = setTimeout(function () {
+                        fn.apply(this, arguments)
+                    }, wait);
+            }
+        }
+
+        // 第三版 是否立即执行
+        function debounceDZ3(fn, wait, immediate) {
+            var timer = null;
+            return function() {
+                if (timer) clearTimeout(timer);
+                if (immediate) {
+                    // 如果已经执行过 不再执行
+                    !timer && fn.apply(this, arguments);
+                    // 启动定时器 wait时间过后的动作才能执行下一次
+                    timer = setTimeout(function () {
+                        timer = null;
+                    }, wait)
+                } else {
+                    timer = setTimeout(function () {
+                        fn.apply(this, arguments);
+                    }, wait);
+                }
+            }
+        }
+        ipt2.addEventListener('input', debounceDZ1(ajaxGetData,1000), false);
+        function getScrollTop() {
+            var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+            console.log(scrollTop);
+        }
+        window.addEventListener('scroll', getScrollTop, false);
+    </script>
+</body>
+</html>
