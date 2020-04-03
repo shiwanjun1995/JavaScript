@@ -33,17 +33,28 @@
   </style>
 </head>
 <body>
-    <h1>场景</h1>
-    <span>一个大型后台系统 用户在搜索框内输入需要查询的字段信息
-        查询的时候就去请求后台返回的数据的话 这样多次输入就会频繁
-        地去请求ajax 就会造成卡顿 因为用户输入具有连续性 可以等用户
-        在输入停顿的时候去请求数据</span>
     <div class="content-box">
-            <h2>1.防抖：</h2>
-            <p>抖动停止后的时间超过设定的时间后执行一次函数</p>
-        <input type="text" id="ipt" /><br>
-        <input type="text" id="ipt2" /><br>
+        <h2>1.防抖：</h2>
+        <span>一个大型后台系统 用户在搜索框内输入需要查询的字段信息
+            查询的时候就去请求后台返回的数据的话 这样多次输入就会频繁
+            地去请求ajax 就会造成卡顿 因为用户输入具有连续性 可以等用户
+            在输入停顿的时候去请求数据</span>
+        <p>抖动停止后的时间超过设定的时间后执行一次函数</p>
+        <label>没有加防抖的</label><input type="text" id="ipt" /><br>
+        <label>加了防抖的</label><input type="text" id="ipt2" /><br>
     </div>
+    <div class="content-box">
+        <h2>2.节流:</h2>
+        <span>一个后台系统中 用户下拉滚动去加载分页数据的时候 如果用防抖的话
+            只能让用户停下滚动的时候才去请求数据 这个场景是不合理的 而是只能
+            让用户无限制滚动 在滚动的第一次请求数据 滚动后间隔一定时间内还要
+            去请求数据</span>
+        <p>按照设定的时间固定执行一次函数</p>
+        <label>加了节流的</label><input type="text" id="ipt3" /><br>
+    </div>
+    <h3>总结：</h3>
+    <p>防抖一般用于很多次操作 但很多操作都是无效的</p>
+    <p>每一次操作都是有效的 在wait秒内最多执行一次函数</p>
     <div class="content-container">
         小风车
         <div class="img-box">
@@ -54,6 +65,7 @@
     <script type="text/javascript">
         var ipt = document.getElementById('ipt');
         var ipt2 = document.getElementById('ipt2');
+        var ipt3 = document.getElementById('ipt3');
         // function ajaxGetData() {
         //     console.log('%c🐖🐖🐖🐖🐖🐖','color:#008B45;text-shadow:5px 5px 2px #fff, 5px 5px 2px #373E40, 5px 5px 5px #A2B4BA, 5px 5px 10px #82ABBA;font-weight:bolder;font-size:20px');
         //     console.log('去请求ajax的数据');
@@ -64,43 +76,40 @@
         })
         // 这样在输入的一瞬间就会立即执行这个函数 这是不必要的
         ipt.addEventListener('input', ajaxGetData, false);
-
+        ipt2.addEventListener('input', debounceDZ1(ajaxGetData,1000), false);
+        ipt3.addEventListener('input', throttle(ajaxGetData,1000), false);
         // fn 为传入的函数 wait 为设定的时间间隔
         /**
-        * 节流函数在首次执行的时候 会把定时器赋值给一个变量
+        * 特点是不断刷新定时器
+        * 防抖函数在首次执行的时候 会把定时器赋值给一个变量
         * 第二次执行的时候 如果间隔没有超过定时器设定的时间则会清除掉定时器 并重新设置定时器 依次重复
         * 当用户停止操作的时候 不会清除定时器 超过一定时间后执行回调函数
         */
-
         // 第一版 this指向的是 window
         function debounceDZ1(fn, wait) {
             var timer = null;
             return function () {
                 if (timer) clearTimeout(timer);
-                console.log(this);
                     timer = setTimeout(fn, wait);
             }
         }
-
         // 第二版 绑定上下文this 并且可拿到事件对象 event
         function debounceDZ2(fn, wait) {
             var timer = null;
             return function() {
                 if (timer) clearTimeout(timer);
-                console.log(this);
                     timer = setTimeout(function () {
                         fn.apply(this, arguments)
                     }, wait);
             }
         }
-
         // 第三版 是否立即执行
         function debounceDZ3(fn, wait, immediate) {
             var timer = null;
             return function() {
                 if (timer) clearTimeout(timer);
                 if (immediate) {
-                    // 如果已经执行过 不再执行
+                    // 如果已经执行过 不再执行 绑定上下文指定的this
                     !timer && fn.apply(this, arguments);
                     // 启动定时器 wait时间过后的动作才能执行下一次
                     timer = setTimeout(function () {
@@ -113,12 +122,40 @@
                 }
             }
         }
-        ipt2.addEventListener('input', debounceDZ1(ajaxGetData,1000), false);
+
         function getScrollTop() {
             var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
-            console.log(scrollTop);
+            console.log(scrollTop,'去请求下拉加载的数据');
         }
+
         window.addEventListener('scroll', getScrollTop, false);
+        window.addEventListener('scroll', throttle(getScrollTop,1000), false);
+
+        // 按照指定的周期来调用函数 这个方法会不停的调用
+        // 这样会出现一个问题 当间隔的时间小于函数延迟执行的时间 代码就不会执行
+        setInterval(debounceDZ3(ajaxGetData,1000), 500);
+        // setInterval(debounceDZ3(ajaxGetData,1000), 2000);
+        // setInterval(throttle(ajaxGetData,1000), 500);
+        /**
+         * 特点：设定一个标识 来判断阀门是否打开
+         * 节流函数在首次执行的时候 会设定一个变量 设定为true开启的 意为正在工作中
+         * 下次执行函数的时候会先判断 如果不是true 则返回 意为正在休息中 谢绝进入
+         * 也就是让函数执行一次后 在某个时间段内暂时失效 过了这段时间后再重新激活
+         * 效果：如果短时间内大量触发同一事件 让函数执行一次后 让函数在指定的时间内不再工作 直至过了这段时间后才重新生效
+        */
+        function throttle(fn, wait) {
+            var flag = true;
+            return function () {
+                // 休息时间 暂不接客
+                if (!flag) return false;
+                // 工作时间 执行函数并且在间隔时间内把状态设置为无效（技能冷却）
+                flag = false;
+                setTimeout(function () {
+                    fn();
+                    flag = true;
+                }, wait)
+            }
+        }
     </script>
 </body>
 </html>
