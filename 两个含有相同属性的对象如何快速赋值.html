@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>两个含有相同属性的对象如何给对应的key赋值</title>
+    <style>
+        code {
+            background-color: orange;
+        }
+    </style>
+</head>
+<body>
+    <h2>场景：两个含有相同属性的对象</h2>
+    <p>那个少的属性的对象如何复制多个属性的对象的值呢？</p>
+    <code>
+        let obj1 = {
+            userName: '熊大',
+            age: '20',
+            gender: '男',
+            money: '10000',
+            car: '丰田AE86'
+        }
+        let obj2 = {
+            gender: '',
+            money: '',
+            car: '',
+        }
+    </code>
+    <h1>如上两个对象 如果想让obj2每个属性对应的值 等于 obj1里面对应key的值 如何快速赋值</h1>
+    <script>
+        let obj1 = {
+            userName: '熊大',
+            age: '20',
+            gender: '男',
+            money: '10000',
+            car: '丰田AE86'
+        }
+        let obj2 = {
+            gender: '',
+            money: '',
+            car: '',
+        }
+        Object.keys(obj2).forEach(key => {
+            obj2[key] = obj1[key]
+        })
+        console.log('🌈🌈🌈🌈🌈🌈',obj2);
+    </script>
+</body>
+</html>
