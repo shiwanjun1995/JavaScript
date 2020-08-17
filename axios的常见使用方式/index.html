@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>axios的常见使用方式</title>
+    <style>
+        li {
+            list-style: none;
+            width: 100%;
+        }
+        .content-box {
+            width: 300px;
+            /* height: 300px; */
+            background-color: skyblue;
+        }
+    </style>
+</head>
+<body>
+    <h1>axios 的常见请求使用方式</h1>
+    <div class="content-box">
+        formData: 上传web表单文件 比如图片或者附件
+        application/json: 上传json对象
+    </div>
+    <ul>
+        <li>
+            <h3>1.GET 获取数据 用在查询列表的时候用到</h3>
+            <h2>get 方法的配置 axios.get(url[,config])</h2>
+            <div class="content-box">
+                get 方式请求使用 params 参数传递 params 必须是一个无格式对象（plain object）或
+                URLSearchParams 对象 paramsa 必须是键值对方式传递 否则 axios 会自动帮你处理为 0=参数的形式
+                参数：url后拼接参数 请求体（request body）传参（params:......）
+            </div>
+        </li>
+        <li>
+            <h3>2.POST 提交数据 表单提交、文件上传</h3>
+            <h2>post 方法的配置 axios.post(url[,data[,config]])</h2>
+            <div class="content-box">
+                参数：url拼接和请求体传参（data:......）
+                请求方式：formData和application/json
+            </div>
+        </li>
+        <li>
+            <h3>3.PUT 更新数据 所有数据推送到后端</h3>
+            <h2>put 方法的配置 axios.put(url[,data[,config]])</h2>
+            <div class="content-box">
+                参数：url拼接和请求体传参（data:......）
+                请求方式：formData和application/json
+            </div>
+        </li>
+        <li>
+            <h3>4.DELETE 删除数据 根据ID删除某列数据</h3>
+            <h2>delete 方法的配置 axios.delete(url[,config])</h2>
+            <div class="content-box">
+                参数：url拼接和请求体传参（data:......）
+                请求方式：formData和application/json
+            </div>
+        </li>
+        <li>
+            <h3>5.为方便起见 为所有支持的请求方法提供了别名</h3>
+            <h2>delete 方法的配置 axios.delete(url[,config])</h2>
+            <div class="content-box">
+                参数：url拼接和请求体传参（data:......）
+            </div>
+        </li>
+    </ul>
+    <div class="content-box">
+        总结：
+        <p>1.get、delete请求方式中 第一个参数为请求url 第二个参数为请求的一些配置项 需要传递给后端的参数包含在配置项的 data 或者 params 属性中</p>
+        <p>2.post、put请求方式中 第一个参数也是请求url 第二个参数为入参的json数据 第三个参数是入参以外的其它配置项</p>
+        <p>参考链接：<a href="https://www.jianshu.com/p/53deecb09077">Axios 各种请求方式传递参数格式</a></p>
+        <p>参考链接：<a href="https://www.jianshu.com/p/37f91b532a21">axios POST三种请求方式</a></p>
+    </div>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        // console.log('🌈🌈🌈🌈🌈🌈',axios);
+
+        // 1-1. get 简写模式传参
+        axios.get('/user?ID=12345&name=张三&age=25')
+            // ? 后面拼接的是参数
+            .then(res => {
+                // 成功之后的回调函数
+                console.log(res);
+            }).catch(err => {
+                // 失败之后的回调函数
+                console.log(err);
+            })
+
+        // 1-2. get 传参
+        axios.get('/user', {
+                params: {
+                    ID: 12345,
+                    name: '张三',
+                    age: 25
+                }
+            })
+            .then(res => {
+                console.log(res);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+
+        // 1-3. async await 模式传参
+        async function getUser() {
+            try {
+                const res = await axios.get('/user?ID=12345&name=zhangsan&age=25')
+                console.log(res);
+            } catch (e) {
+                console.log(e);
+            }
+        }
+
+
+        // 2-1. post 简写模式传参
+        axios.post('/user', {
+                firstName: '帅',
+                lastName: '大猪'
+            })
+            .then(res => {
+                console.log(res);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+
+        // 4-1. 传参格式
+        // 如果服务端将参数作为java对象来接收
+        axios.delete('demo/url', {
+            data: {
+                id: 123,
+                name: '大猪',
+            }
+        })
+        // 如果服务端将参数作为url参数来接收 则请求的url为：www.demo/url?id=123&name=大猪这种格式
+        axios.delete('demo/url', {
+            params: {
+                id: 123,
+                name: '大猪',
+            }
+        })
+
+    </script>
+
+    <script>
+        // let $error = utils.debounce(Message.error, 2000, true);//2秒内 只初次生效
+
+        const phone = Cookies.get('phone')
+        const userName = Cookies.get('userName')
+        const loginName = Cookies.get('loginName')
+        const Authorization = Cookies.get('Authorization')
+        // 把上面从cookie里面获取到的信息合并到APP_USER这个对象中
+        const APP_USER = {
+            phone,
+            userName,
+            loginName,
+            newtoken: Authorization,
+        }
+        // 添加请求拦截器 request
+        axios.interceptors.request.use(request => {
+            // 在发送请求之前做些什么 比如在每个请求发送之前 在请求头添加登录认证信息(因为接口需要token)
+            request.headers['APP_USER'] = JSON.stringify(APP_USER)
+            return request
+        })
+        // 添加响应拦截器 response
+        axios.interceptors.response.use(response => {
+            // 对响应数据做点什么 比如
+            return new Promise((resolve,reject) => {
+
+            })
+        }, error => {
+            // 对响应错误做点什么 比如显示出错信息等
+            const { response, message } = error
+            let errorMsg = ''
+            // 分为有响应和无响应两种情况
+            if (!response) {
+                errorMsg = '网络错误，请检测网络是否正常！'
+            } else {
+                const { data } = response
+                errorMsg = data && data.errorMsg ? data.errorMsg : '服务器发生异常，请联系管理员'
+            }
+            $error(errorMsg)
+            // 在控制台打印出错的日志信息
+            console.log(`%c ${ message || errorMsg }`, 'color:#fff,background-color:red');
+            return Promise.reject(error)
+        })
+    </script>
+</body>
+</html>
