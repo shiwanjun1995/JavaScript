@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            background-color:#3c9;
+            margin-bottom: 20px;
+        }
+        .red {
+            font-style: italic;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>
+        这是一个测试数组的reduce方法的页面
+        <pre>
+            arr.reduce((prev,current,index,arr) => {
+                // ...code
+            },initialValue)
+        </pre>
+    </h1>
+    <strong>用法简介：</strong>
+    <ul>
+        <li>1.reduce()方法接收一个函数作为累加器，这个函数有四个参数；前一个值、当前值、项的索引和数组对象；</li>
+        <li>2.传递给函数的初始值（可选的），作为归并基础的初始值。</li>
+    </ul>
+    <strong>注意点：</strong>
+    <ul>
+        <li>如果没有提供initialValue初始值的话，reduce函数会从索引为1的地方开始执行callback回调函数，跳过第一个索引。
+            如果提供了初始值的话，索引从0开始。
+        </li>
+        <li>reduce()对于空数组是不会执行回调函数的。会报错，一般来说提供初始值会更安全。</li>
+    </ul>
+    <p class="red">这个函数返回的任何值都会作为第一个参数自动传给下一项，第一次迭代发生在数组的第二项上，因此第一个参数是数组的第一项，第二个参数就是数组的第二项。</p>
+    <div class="box">1.计算数组里所有项的和</div>
+    <div class="box">2.求数组里最大项的值</div>
+    <div class="box">3.去除数组里的重复项</div>
+    <h2>总结：
+        reduce()是数组的归并方法，与forEach()、map()、filter()等迭代方法一样都会对数组每一项进行遍历，但是reduce()可以同时将前面数组项遍历产生的结果与当前遍历项进行运算，这一点是其它迭代方法无法企及的。
+    </h2>
+    <script>
+        // 1.计算数组里所有项的和
+        const arr1 = [1,2,3,4]
+        /**
+         * prev: 函数传进来的初始值(initialValue)|上一次回调的返回值(prev)
+         * current: 数组中当前处理的元素
+         **/
+        const arrSum = arr1.reduce(function(prev,current,index,arr) {
+            // debugger
+            // console.log(prev,current,index);
+            return prev + current
+        })
+        console.log('1.计算数组里面所有项的和',arrSum);
+        // 添加了初始值
+        const arrSumInitialValue = arr1.reduce((prev,current,index,arr) => {
+            // debugger
+            // console.log(prev,current,index);
+            return prev + current
+        }, 10)
+        console.log('1.计算数组里面所有项的和(添加了初始值)',arrSumInitialValue);
+
+        // 2.求数组项里面最大的值
+        const arr2 = [999,99,9,1]
+        const maxItem = arr2.reduce((prev,current) => {
+            // debugger
+            return Math.max(prev,current)
+        })
+        console.log('2.求数组项里面最大的值',maxItem);
+
+        // 3.数组去重
+        const arr3 = [1,11,1,99,9,99,11]
+        const arrNoRepeat = arr3.reduce((prev,current) => {
+            // 元素在数组中的位置，如果没有搜索到则返回 -1。
+            if (prev.indexOf(current) === -1) {
+                prev.push(current)
+                // debugger
+            }
+            return prev
+        }, [])
+        // 初始化一个空数组
+        // 在初始化数组内查找需要做去重处理的数组的(当前项)第1项，如果查找不到，就把它添加到这个数组中
+        // 在初始化数组内查找需要做去重处理的数组的(当前项)第2项，如果查找不到，就把它添加到这个数组中
+        // ...
+        // 在初始化数组内查找需要做去重处理的数组的(当前项)第n项，如果查找不到，就把它添加到这个数组中
+        // 将这个初始化数组返回
+        console.log('3.数组去重',arrNoRepeat);
+
+        // 应用 有时候后端同学要求我们更改一下数据格式 改变数组对象的key和value并组合成一个数组对象
+        let beforeArray = [
+            {key: 'connecting_microphone', value: '连麦'},
+            {key: 'encryption_live', value: '加密直播'},
+            {key: 'money_rain', value: '红包雨'},
+            {key: 'luck_draw', value: '抽奖'},
+        ]
+        let afterArray = [
+            {connecting_microphone:'连麦'},
+            {encryption_live:'加密直播'},
+            {money_rain:'红包雨'},
+            {luck_draw:'抽奖'},
+        ]
+        let mapArray = beforeArray.map(item => {
+            let el = {}
+            let key = item.key
+            el[key] = item.value
+            return el
+        })
+        // console.log(beforeArray);
+        // console.log('🌈🌈🌈🌈🌈🌈',mapArray);
+        // 利用reduce
+        let reduceArray = beforeArray.reduce((prev,current) => {
+            // console.log(prev,current);
+            let rItem = {}
+            let rKey = current.key
+            rItem[rKey] = current.value
+            prev.push(rItem)
+            // 记住要return 因为reduce函数会将函数的第一个参数作为返回值自动传递给下一项
+            return prev
+        }, [])
+        // console.log(reduceArray);
+
+        // 应用 改变数组对象的id=>key,name=>value (改变key，值不变)
+        let beforeArray2 = [
+            {id: 1, name:'小明'},
+            {id: 4, name:'小红'},
+            {id: 3, name:'小张'},
+            {id: 2, name:'小李'},
+        ]
+        let afterArray2 = [
+            {key: 1, value:'小明'},
+            {key: 4, value:'小红'},
+            {key: 3, value:'小张'},
+            {key: 2, value:'小李'},
+        ]
+        // 我们先来做一个映射 从旧key到新key的映射
+        let mapArray2 = beforeArray2.map(item => {
+            return {
+                key: item.id,
+                value: item.name
+            }
+        })
+        // console.log(mapArray2);
+        let tempArray = []
+        let keyMap = {
+            "id": "key",
+            "name": "value",
+        }
+        for (let item of beforeArray2) {
+            let newItem = {}
+            for (let k in item) {
+                // 新的key为映射里面key值对应的新的key
+                let newKey = keyMap[k]
+                // 新的项的值和旧的项值是相等的
+                newItem[newKey] = item[k]
+            }
+            tempArray.push(newItem)
+        }
+        // console.log(tempArray);
+        // 利用reduce
+        let reduceArray2 = beforeArray2.reduce((prev,current) => {
+            let rItem = {}
+            for (let k in current) {
+                let newKey = keyMap[k]
+                rItem[newKey] = current[k]
+            }
+            prev.push(rItem)
+            return prev
+        }, [])
+        // console.log(reduceArray2);
+
+        const data = {id: 11,name:'张三'}
+        var keyMap2 = {id:'序列', name:'姓名'}
+        var objs= Object.keys(data).reduce((newData, key) => {
+            let newKey = keyMap2[key] || key
+            newData[newKey] = data[key]
+            return newData
+        }, {})
+        // console.log(objs);
+    </script>
+</body>
+</html>
