@@ -90,6 +90,19 @@
         // 将这个初始化数组返回
         console.log('3.数组去重',arrNoRepeat);
 
+        // 4.数组的扁平化
+        const arr4 = [1,2,[3,4],[[5,6,7]]]
+        // console.log('🌼🌼🌼',arr4.flat(Infinity));
+        let arrOne = arr4.join(',').split(',').map(item => parseInt(item))
+        // console.log(arrOne)
+        // reduce + 递归
+        function arrOneByReduce(arr) {
+            return arr.reduce((prev,current) => {
+                return prev.concat(Array.isArray(current) ? arrOneByReduce(current) : current)
+            },[])
+        }
+        console.log(arrOneByReduce(arr4))
+
         // 应用 有时候后端同学要求我们更改一下数据格式 改变数组对象的key和value并组合成一个数组对象
         let beforeArray = [
             {key: 'connecting_microphone', value: '连麦'},
