@@ -8,7 +8,6 @@
   <title>去重的方法</title>
   <style>
     .content-box {
-      background-color: #cff;
       text-align: center;
     }
 
@@ -35,15 +34,18 @@
     <sub>接收一个函数最为累加器 数组中的每个值从左到右开始合并 最后返回一个值</sub>
     <p>reduce() 其实也就是对数组从左至右进行遍历 在遍历的同时按照回调函数中的方法进行处理 其特别之处就在于它每次遍历一个元素后就会将这个元素放在累加器中累积起来 类似于收割机收小麦一样 从左至右收割
       收割机中用来放收割好小麦的地方就类似于readuce()的累加器 最后满满收好的一大袋小麦就类似于reduce()的返回值</p>
+    <p>应用场景：
+      1.移动端 input 输入框 输入某个关键词后，选中对应选项后，checkbox 为勾选状态，提交勾选后的数据。再次输入某个关键词，如果选中相同的选项，需要排除上次选中的选项。
+    </p>
   </div>
 
   <script>
     let arr1 = ['大', '大猪', '大小', '大', '大小', '猪', 1, 22, 33, 22, 1, 6, 8, 88, 33];
+    console.log(arr1);
     // 数组转set
     // new Set() 接受一个数组或类数组对象 
     let set = new Set(arr1);
 
-    console.log(arr1);
     // set 自带去重
     console.log([...set]);
     // set转array
@@ -62,7 +64,7 @@
     // })
     for (let i = 0; i < arr1.length; i++) {
       if (!obj[arr1[i]]) {
-        obj[arr1[i]] = '随便赋值'
+        obj[arr1[i]] = true
         // debugger
         newArr.push(arr1[i])
       }
@@ -117,34 +119,77 @@
       },
     ];
 
-    // 1.两个for循环 将数组的每一个元素和剩余元素进行一一比较 如果发现在剩余元素出现id相同的项 就利用splice() 方法删除这一项 
-    // 但是这个方法删除的话 会改变数组的长度 所以需要让当前索引 --
-    // function removeRepeat(arr, key) { 
-    //   for (let i = 0; i < arr.length; i++) {
-    //     for (let j = i + 1; j < arr.length; j++) {
-    //       if (arr[i][key] === arr[j][key]) {
-    //         arr.splice(j,1)
-    //         j--;
-    //       }
-    //     }
-    //   } 
-    //  }
+    // 1.两个for循环 将数组的每一个元素和剩余元素进行一一比较 如果发现剩余元素出现id相同的项 就利用splice() 方法删除这一项 
+    function removeRepeat(arr, key) { 
+      for (let i = 0; i < arr.length - 1; i++) {
+        for (let j = i + 1; j < arr.length; j++) {
+          if (arr[i][key] === arr[j][key]) {
+            arr.splice(j,1)
+            // 当删除了当前 j 所在的元素以后，后边的元素会自动补位
+            // 因为这个方法会改变数组长度，让数组长度减小 1，所以直接 j++ 会漏掉一个元素，所以要 j--
+            j--
+          }
+        }
+      }
+      return arr;
+     }
+    //  console.log(removeRepeat(data, 'id'));
 
-    //  removeRepeat(data, 'id')
+    function abc(arr) {
+      let obj = {}
+      for (let i of arr) {
+        obj[i] = true;
+      }
+      console.log(obj);
+      return Object.keys(obj);
+    }
+    console.log('🍓🍓🍓🍓🍓🍓', abc(arr1));
     
     // 2.通过reduce() 方法的累积器作用 在对数组对象进行遍历的时候 通过hash对象标记 数组中 每个元素id是否出现过
     // 如果没有 当前遍历到的元素就会放到累加器中 否则不会放入
-    
-    let hash = {};
-    data = data.reduce((pre,curr) => {
-      hash[curr.id] ? '' : hash[curr.id] = true && pre.push(curr);
-      return pre
-    }, [])
+    function removeRepeatByReduce(arr, key) {
+      // 对象中存储的必须是键值对 这样容易判断对象里面有没有这个键 所以对象的键 必须对应一个值
+      let hash = {};
+      // reduce方法返回的是最后一次调用回调函数的返回值
+      arr = arr.reduce((pre,cur) => {
+        // hash[cur[key]] ? '' : hash[cur[key]] = true && pre.push(cur);
+        // 当对象里没有所传属性时，给属性赋值 true 并 push 进数组
+        if (!hash[cur[key]]) {
+          // 取不到值 说明是第一次出现
+          hash[cur[key]] = true
+          pre.push(cur)
+        }
+        return pre
+      }, [])
+      return arr
+    }
 
     // 上面的 [] 表示初始值    
-     console.log('>>>',data, hash);
+    console.log(removeRepeatByReduce(data, 'id'));
 
-    // 参考链接: 1.https://www.jianshu.com/p/5c672a7a8b0b 2.https://blog.csdn.net/xum222222/article/details/80657316
+    // 3.Map对象 键值对集合，key 值不仅可以是字符串还可以是其它各种类型的值包括对象也可以成为 Map 的键
+    // has 方法返回一个布尔值，表示某个键是否在当前 Map 对象之中
+    function removeRepeatByMap(arr, key) {
+      let map = new Map()
+      for (const obj of arr ) {
+        if (!map.has(obj[key])) {
+          // set 方法 设置键名 key 对应的减值为 value 
+          map.set(obj[key],obj)
+        }
+      }
+      return [...map.values()]
+    }
+
+    console.log(removeRepeatByMap(data, 'id'));
+
+    /* 参考链接:
+    1.https://www.jianshu.com/p/5c672a7a8b0b
+    2.https://blog.csdn.net/xum222222/article/details/80657316
+    3.https://www.jianshu.com/p/6fe808019416
+    4.https://blog.csdn.net/qq_41657790/article/details/87535619
+    5.https://zhidao.baidu.com/question/2117374649677753947.html
+    6.https://www.jianshu.com/p/7c12cbaa817b
+    */
   </script>
 </body>
 

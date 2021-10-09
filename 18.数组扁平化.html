@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>数组扁平化</title>
+  <style>
+    .content-box {
+      text-align: center;
+    }
+
+    sub {
+      color: #f40;
+    }
+
+    h1 {
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>数组的扁平化</h1>
+  <div class="content-box">
+    <h2>1.数组的扁平化 递归</h2>
+    <sub>递归地遍历数组的每一项，若为数组则继续遍历，concat 拼接</sub>
+  </div>
+  <div class="content-box">
+    <h2>2.数组的扁平化 reduce()</h2>
+    <sub>遍历数组 arr , 若 arr[i] 为数组则递归遍历，直至 arr[i] 不为数组然后与之前的结果 concat</sub>
+  </div>
+  <div class="content-box">
+    <h2>3.数组的扁平化 扩展运算符 ...</h2>
+    <sub>es6的扩展运算符能够将二维数组变为一维</sub>
+  </div>
+  <script>
+    const arr = [1,[1,2],[1,[2,3]],[1,[2],[3,4]],[1,[2,3],[4,[5]]],6];
+    // 1.递归 定义一个临时的数组 用于存放递归后的数据 (1) 用于两个数组的拼接 (2) 用于push单个数据
+    function flattenByRecur(arr) {
+      let temp = []
+      arr.forEach(item => {
+        // 如果是数组
+        if (Array.isArray(item)) {
+          temp = temp.concat(flattenByRecur(item))
+        } else {
+          temp.push(item)
+        }
+      });
+      return temp
+    }
+    console.log(flattenByRecur(arr));
+    // 2.reduce() 先把带有数组外壳的项给 脱去数组外壳 然后把一个个数给拼接起来
+    function flattenByReduce(arr) {
+      arr = arr.reduce((pre,cur) => {
+        // pre 会返回上次调用函数的结果
+        return pre.concat(Array.isArray(cur) ? flattenByReduce(cur) : cur)
+      },[])
+      return arr
+    }
+    console.log(flattenByReduce(arr));
+    // 3. 扩展运算符 ... 若arr中含有数组则使用扩展运算符 直至没有为止
+    function flattenByThree(arr) {
+      while (arr.some((item) => Array.isArray(item))) {
+        arr = [].concat(...arr)
+      }
+      return arr
+    }
+    console.log(flattenByThree(arr));
+
+    /* 参考链接：
+    1.https://www.cnblogs.com/w-yh/p/12053575.html
+    */
+  </script>
+</body>
+
+</html>
