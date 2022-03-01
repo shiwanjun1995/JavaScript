@@ -136,23 +136,21 @@
         // setInterval(debounceDZ3(ajaxGetData,1000), 2000);
         // setInterval(throttle(ajaxGetData,1000), 500);
         /**
-         * 特点：设定一个标识 来判断阀门是否打开
-         * 节流函数在首次执行的时候 会设定一个变量 设定为true开启的 意为正在工作中
-         * 下次执行函数的时候会先判断 如果不是true 则返回 意为正在休息中 谢绝进入
-         * 也就是让函数执行一次后 在某个时间段内暂时失效 过了这段时间后再重新激活
+         * 想象一下有一个开关，控制着动画的运行。就像阀一样，阀开着水才能流出。
+         * 同样的，我们也可以设一个(阀)flag=true;。在事件的开头处，判断if(flag){flag=false;do somenthing}
+         * 阀打开的情况下运行函数，并且把开着的水龙头关掉flag=false;让事件无法连续触发，最后事件结尾判断动画如果结束，再打开阀flag=true。
          * 效果：如果短时间内大量触发同一事件 让函数执行一次后 让函数在指定的时间内不再工作 直至过了这段时间后才重新生效
-        */
+         */
         function throttle(fn, wait) {
             var flag = true;
             return function () {
-                // 休息时间 暂不接客
-                if (!flag) return false;
-                // 工作时间 执行函数并且在间隔时间内把状态设置为无效（技能冷却）
-                flag = false;
-                setTimeout(function () {
-                    fn();
-                    flag = true;
-                }, wait)
+                if (flag) {
+                    flag = false;
+                    setTimeout(function () {
+                        fn.apply(this, arguments);
+                        flag = true;
+                    }, wait)
+                }
             }
         }
     </script>
