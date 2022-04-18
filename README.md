@@ -1,2 +1,1 @@
-### 导航页
-https://shiwanjun1995.github.io/javascript-learn/index.html
+### js常用的操作以及工作实践中的最佳实践持续更新中......
