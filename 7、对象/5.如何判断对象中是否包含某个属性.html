@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>如何判断对象中是否包含某个属性</title>
+</head>
+<body>
+  <p>应用场景：遍历数组对象的时候，查看某个item是否包含某个属性，如果不包含，过滤掉，或者作为判断条件，不满足相关参数，无法上传。</p>
+  <h2>
+    <p>for...in 遍历对象自身的和继承的（原型链上的）可枚举属性，可配合 hasOwnProperty() 只获取自身可枚举属性，如深拷贝</p>
+    <p>Object.keys() 返回对象自身的可枚举属性，返回键名数组</p>
+    <p>Object.getOwnPropertyNames() 返回对象自身的所有属性，包括可包括可枚举和不可枚举的属性</p>
+    <p>Object.getOwnPropertySymbols() 返回对象自身的所有 Symbol 属性的键名</p>
+    <p>Reflect.ownKeys() 返回对象自身的所有属性，包括Symbol类型属性</p>
+  </h2>
+  <button class="submit">提交</button>
+  <script>
+    // 所有继承了 Object 的对象都会继承到 hasOwnProperty 方法。
+    // 这个方法可以用来检测一个对象是否含有特定的自身属性；和 in 运算符不同，该方法会忽略掉那些从原型链上继承到的属性。
+    // 如果指定的属性在指定的对象或其原型链中，则 in 运算符返回true。
+    var arr1 = [
+      {name: '标准CI流程', type: 'CI', nextType: 'solid'},
+      {name: '标准CD流程', type: 'CD', nextType: 'solid'},
+      {name: 'CD流程-1', type: 'CD', nextType: 'dashed'},
+      {name: 'CD流程-2', type: 'CD'}, // 这一条数据有问题
+      {name: 'CD流程-3', type: 'CD', nextType: 'dashed'},
+    ]
+
+    var btn = document.querySelector('.submit')
+    btn.addEventListener('click', function() {
+      var notContainLastArr1 = arr1.slice(0, -1)
+      console.log(notContainLastArr1);
+      var hasNextType = notContainLastArr1.every(item => {
+        console.log('对象的自身属性', item.hasOwnProperty('nextType'));
+        return item.hasOwnProperty('nextType')
+        // console.log('继承而来', 'toString' in item);
+        // return 'nextType' in item
+      })
+  
+      if (!hasNextType) {
+        alert('请确保每条流程都有连接线')
+        return
+      }
+    })
+
+    // 参考链接：1.https://blog.csdn.net/wangfeijiu/article/details/109896126；2.https://juejin.cn/post/7000930883603529742
+
+  </script>
+</body>
+</html>
