@@ -1,166 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>axios的常见使用方式</title>
     <style>
-        li {
-            list-style: none;
-            width: 100%;
-        }
-        .content-box {
-            /* background-color: skyblue; */
-        }
+      li {
+        list-style: none;
+        width: 100%;
+      }
+      .content-box {
+        /* background-color: skyblue; */
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <h1>axios 的常见请求使用方式</h1>
     <div class="content-box">
-        formData: 上传web表单文件 比如图片或者附件
-        application/json: 上传json对象
+      formData: 上传web表单文件 比如图片或者附件 application/json: 上传json对象
     </div>
     <ul>
-        <li>
-            <h3>1.GET 获取数据 用在查询列表的时候用到</h3>
-            <h2>get 方法的配置 axios.get(url[,config])</h2>
-            <div class="content-box">
-                get 方式请求使用 params 参数传递 params 必须是一个无格式对象（plain object）或
-                URLSearchParams 对象 paramsa 必须是键值对方式传递 否则 axios 会自动帮你处理为 0=参数的形式
-                参数：url后拼接参数 请求体（request body）传参（params:......）
-            </div>
-        </li>
-        <li>
-            <h3>2.POST 提交数据 表单提交、文件上传</h3>
-            <h2>post 方法的配置 axios.post(url[,data[,config]])</h2>
-            <div class="content-box">
-                参数：url拼接和请求体传参（data:......）
-                请求方式：formData和application/json
-            </div>
-        </li>
-        <li>
-            <h3>3.PUT 更新数据 所有数据推送到后端</h3>
-            <h2>put 方法的配置 axios.put(url[,data[,config]])</h2>
-            <div class="content-box">
-                参数：url拼接和请求体传参（data:......）
-                请求方式：formData和application/json
-            </div>
-        </li>
-        <li>
-            <h3>4.DELETE 删除数据 根据ID删除某列数据</h3>
-            <h2>delete 方法的配置 axios.delete(url[,config])</h2>
-            <div class="content-box">
-                参数：url拼接和请求体传参（data:......）
-                请求方式：formData和application/json
-            </div>
-        </li>
-        <li>
-            <h3>5.为方便起见 为所有支持的请求方法提供了别名</h3>
-            <h2>request 方法的配置 axios.request(url[,config])</h2>
-            <div class="content-box">
-                参数：url拼接和请求体传参（data:......）
-            </div>
-        </li>
+      <li>
+        <h3>1.GET 获取数据 用在查询列表的时候用到</h3>
+        <h2>get 方法的配置 axios.get(url[,config])</h2>
+        <div class="content-box">
+          get 方式请求使用 params 参数传递 params 必须是一个无格式对象（plain
+          object）或 URLSearchParams 对象 paramsa 必须是键值对方式传递 否则
+          axios 会自动帮你处理为 0=参数的形式 参数：url后拼接参数
+          请求体（request body）传参（params:......）
+        </div>
+      </li>
+      <li>
+        <h3>2.POST 提交数据 表单提交、文件上传</h3>
+        <h2>post 方法的配置 axios.post(url[,data[,config]])</h2>
+        <div class="content-box">
+          参数：url拼接和请求体传参（data:......）
+          请求方式：formData和application/json
+        </div>
+      </li>
+      <li>
+        <h3>3.PUT 更新数据 所有数据推送到后端</h3>
+        <h2>put 方法的配置 axios.put(url[,data[,config]])</h2>
+        <div class="content-box">
+          参数：url拼接和请求体传参（data:......）
+          请求方式：formData和application/json
+        </div>
+      </li>
+      <li>
+        <h3>4.DELETE 删除数据 根据ID删除某列数据</h3>
+        <h2>delete 方法的配置 axios.delete(url[,config])</h2>
+        <div class="content-box">
+          参数：url拼接和请求体传参（data:......）
+          请求方式：formData和application/json
+        </div>
+      </li>
+      <li>
+        <h3>5.为方便起见 为所有支持的请求方法提供了别名</h3>
+        <h2>request 方法的配置 axios.request(config)</h2>
+        <div class="content-box">参数：url拼接和请求体传参（data:......）</div>
+      </li>
     </ul>
-    <div class="content-box">
-        常用方式总结：
-        <p>1.get、delete请求方式中 第一个参数为请求url 第二个参数为请求的一些配置项 需要传递给后端的参数包含在配置项的 data 或者 params 属性中</p>
-        <p>2.post、put请求方式中 第一个参数也是请求url 第二个参数为入参的json数据 第三个参数是入参以外的其它配置项</p>
-        <p>参考链接：<a href="https://www.jianshu.com/p/53deecb09077">Axios 各种请求方式传递参数格式</a></p>
-        <p>参考链接：<a href="https://www.jianshu.com/p/37f91b532a21">axios POST三种请求方式</a></p>
+    <div class="contet-box">
+      上面几种方法的配置详解： 这种表达方式是 BNF 语法，[]
+      在bnf（或各种变体）里表示optional，可选的；逗号写在 []
+      里是因为要表示第n个参数。
+      <p>
+        axios.get (url[,
+        config])：这种表示可以写成一个参数或者两个参数，后一个是可选的。
+      </p>
+      <p>
+        axios.post(url[, data[,
+        config]])：这种表示可以写成一个参数或者两个参数，后一个是可选的。（一个可选的参数名称为data，其第二个内部名称为config的参数也是可选的）
+      </p>
+      <p>
+        参考链接：<a
+          href="https://segmentfault.com/q/1010000009063585?u_atoken=eb0d4ef1-7457-406c-b33f-2d9521a8553f&u_asession=01iQQnW_Ah80YZ75lfJzoXXUVViPYnADzU-6NHa4i0SUdSe_kstwJ7K6zBJgAZQNdhX0KNBwm7Lovlpxjd_P_q4JsKWYrT3W_NKPr8w6oU7K-esBCCjKlMGTLWSp8G-mMHXrFRrFEwkAXlkkWTaFgeRmBkFo3NEHBv0PZUm6pbxQU&u_asig=05VbG5ePk9V-SNVfm59Jr3egEw1cuNJpTD1MOxryT0GkbCE_lOBRAV5HRwV0zpc3SUuQX4CTuQXTwe0c9z9gysacmW-0N1HaDLfJ7HdgfdfQ9Y6c1Fhhb5k7KrnAN4krHiErLZj2K0NR4I0w-0i0w3TahBcxzbtj9DSQJftgEqLdb9JS7q8ZD7Xtz2Ly-b0kmuyAKRFSVJkkdwVUnyHAIJzaECmE2Y0-IcKmGerG6PrYbsdbZwLb0O8WX_rhliuag27DOpsDkA_bmTlLhsyWRKzO3h9VXwMyh6PgyDIVSG1W-zZKIKd7GoVYmYQ9woJ2YiiC5haaDpMo85GGl7nYBJOcyl6IL-bdNN9Cnkr4sHY4lseuWwIKGI3vaSvxl4JFoZmWspDxyAEEo4kbsryBKb9Q&u_aref=ZA4BIyjGhKG89F3%2FPZoK%2Fy8olrY%3D"
+          >Axios 配置BNF语法详解</a
+        >
+      </p>
     </div>
     <div class="content-box">
-        基础方式总结：
-        <h1>Request Config 请求配置 是一个对象 object</h1>
-        <ul style="color: red;">
-            <li>
-                // url 是用于请求服务器的地址
-                url: '/user',
-            </li>
-            <li>
-                // method 是用于请求时的方法
-                method: 'get', 默认
-            </li>
-            <li>
-                // baseURL 将会被添加至url的前面 很方便地为axios实例设置相对url
-                baseUrl: 'https://some-domain.com/api/',
-            </li>
-            <li>
-                // headers 是要发送的自定义的请求头
-                headers: {},
-            </li>
-            <li>
-                // params 是跟随请求一起发送的url参数 必须是纯对象或URLSearchParams对象
-                params: {
-                    ID: 12345
-                },
-            </li>
-            <li>
-                // data 是跟随请求一起发送的data请求实体 仅适用于 PUT、POST、PATCH方法
-                data: {
-                    firstName: '大猪'
-                }
-            </li>
-            <li>
-                // timeout 设置了请求超时前的毫秒数 milliseconds 如果请求的时间比这个设置的超时时间要长则请求将会被终止
-                timeout: 15 * 1000,
-            </li>
-            <li>
-                // withCredentials 设置的是是否允许跨站点请求 请求时是否带上cookie（在不同域名下做XHR请求的时候由于存在不同域【包括 协议 端口 域名】那么cookie【默认情况】将会无法传递）
-                withCredentials: false, 默认
-                参考链接：<a href="http://www.chinacion.cn/article/1216.html">单点登录cookie跨域二三事之withCredentials</a>、<a href="https://www.cnblogs.com/taohuaya/p/10659834.html">XMLHttpRequest.withCredentials 解决跨域请求头无Cookie的问题</a>
-            </li>
-            <li>
-                // proxy 定义了代理服务器的主机名和端口号
-                proxy: {
-                    host: '127.0.0.1',
-                    port: 9000,
-                }
-            </li>
-        </ul>
-        <h1>Response Schema 请求的响应包含以下信息</h1>
-        <ul style="color: darkgreen;">
-            <li>
-                // data 是服务器提供的响应数据 一般取的就是这个
-                data: {},
-            </li>
-            <li>
-                // status 是服务器返回的http响应状态码
-                status: 200,
-            </li>
-            <li>
-                // statusText 是服务器返回的http响应状态信息
-                statusText: 'ok',
-            </li>
-            <li>
-                // headers 是服务器响应的标头 是小写的 对应的在浏览器中的 response headers
-                headers: {},
-            </li>
-            <li>
-                // config 是为axios提供的用于请求的配置 里面包含一些默认配置
-                config: {},
-            </li>
-            <li>
-                // request 是生成此次响应的请求
-                request: {},
-            </li>
-        </ul>
-        <h1>Config Defaults 为每个请求配置默认值</h1>
-        <ul style="color: skyblue;">
-            <li>
-                // baseURL 绝对URL 在每个请求前都会自动拼接这个url
-                baseURL: 'https://api.example.com'
-            </li>
-            <li>
-                // headers 每个请求的请求头信息
-                headers: {}
-            </li>
-        </ul>
-        <h1>Interceptors 可以为每个请求或响应设置拦截器 然后再进行处理（then）或捕获（catch）</h1>
-        <ul style="color: green;">
-            <li>
-                添加一个请求拦截器
-                <pre>
+      常用方式总结：
+      <p>
+        1.get、delete请求方式中 第一个参数为请求url 第二个参数为请求的一些配置项
+        需要传递给后端的参数包含在配置项的 data 或者 params 属性中
+      </p>
+      <p>
+        2.post、put请求方式中 第一个参数也是请求url 第二个参数为入参的json数据
+        第三个参数是入参以外的其它配置项
+      </p>
+      <p>
+        参考链接：<a href="https://www.jianshu.com/p/53deecb09077"
+          >Axios 各种请求方式传递参数格式</a
+        >
+      </p>
+      <p>
+        参考链接：<a href="https://www.jianshu.com/p/37f91b532a21"
+          >axios POST三种请求方式</a
+        >
+      </p>
+    </div>
+    <div class="content-box">
+      基础方式总结：
+      <h1>Request Config 请求配置 是一个对象 object</h1>
+      <ul style="color: red">
+        <li>// url 是用于请求服务器的地址 url: '/user',</li>
+        <li>// method 是用于请求时的方法 method: 'get', 默认</li>
+        <li>
+          // baseURL 将会被添加至url的前面 很方便地为axios实例设置相对url
+          baseUrl: 'https://some-domain.com/api/',
+        </li>
+        <li>// headers 是要发送的自定义的请求头 headers: {},</li>
+        <li>
+          // params 是跟随请求一起发送的url参数
+          必须是纯对象或URLSearchParams对象 params: { ID: 12345 },
+        </li>
+        <li>
+          // data 是跟随请求一起发送的data请求实体 仅适用于 PUT、POST、PATCH方法
+          data: { firstName: '大猪' }
+        </li>
+        <li>
+          // timeout 设置了请求超时前的毫秒数 milliseconds
+          如果请求的时间比这个设置的超时时间要长则请求将会被终止 timeout: 15 *
+          1000,
+        </li>
+        <li>
+          // withCredentials 设置的是是否允许跨站点请求
+          请求时是否带上cookie（在不同域名下做XHR请求的时候由于存在不同域【包括
+          协议 端口 域名】那么cookie【默认情况】将会无法传递） withCredentials:
+          false, 默认 参考链接：<a
+            href="http://www.chinacion.cn/article/1216.html"
+            >单点登录cookie跨域二三事之withCredentials</a
+          >、<a href="https://www.cnblogs.com/taohuaya/p/10659834.html"
+            >XMLHttpRequest.withCredentials 解决跨域请求头无Cookie的问题</a
+          >
+        </li>
+        <li>
+          // proxy 定义了代理服务器的主机名和端口号 proxy: { host: '127.0.0.1',
+          port: 9000, }
+        </li>
+      </ul>
+      <h1>Response Schema 请求的响应包含以下信息</h1>
+      <ul style="color: darkgreen">
+        <li>// data 是服务器提供的响应数据 一般取的就是这个 data: {},</li>
+        <li>// status 是服务器返回的http响应状态码 status: 200,</li>
+        <li>// statusText 是服务器返回的http响应状态信息 statusText: 'ok',</li>
+        <li>
+          // headers 是服务器响应的标头 是小写的 对应的在浏览器中的 response
+          headers headers: {},
+        </li>
+        <li>
+          // config 是为axios提供的用于请求的配置 里面包含一些默认配置 config:
+          {},
+        </li>
+        <li>// request 是生成此次响应的请求 request: {},</li>
+      </ul>
+      <h1>Config Defaults 为每个请求配置默认值</h1>
+      <ul style="color: skyblue">
+        <li>
+          // baseURL 绝对URL 在每个请求前都会自动拼接这个url baseURL:
+          'https://api.example.com'
+        </li>
+        <li>// headers 每个请求的请求头信息 headers: {}</li>
+      </ul>
+      <h1>
+        Interceptors 可以为每个请求或响应设置拦截器
+        然后再进行处理（then）或捕获（catch）
+      </h1>
+      <ul style="color: green">
+        <li>
+          添加一个请求拦截器
+          <pre>
                     axios.interceptors.request.use((config) => {
                             // 在请求发送之前做点什么 （比如：给请求添加请求头认证）
                             return config
@@ -168,11 +178,12 @@
                             // 如果请求失败了如何处理
                             return Promise.reject(error)
                         })
-                </pre>
-            </li>
-            <li>
-                添加一个响应拦截器
-                <pre>
+                </pre
+          >
+        </li>
+        <li>
+          添加一个响应拦截器
+          <pre>
                     axios.interceptors.response.use((response) => {
                         // 在响应之后做点什么 （比如：封装promise对响应后的数据是否正常返回数据进行 resolve处理正常响应 reject处理失败响应 他们都会返回一个promise实例【因为resolve或者reject执行操作后 promise的使命就完成了 后续的操作放在.then()里面而不是 这两个操作后 所以一般加上return语句】）
                         // 任何在 2xx 范围内的状态码的都会触发此响应
@@ -181,26 +192,32 @@
                         // 如何超出 2xx 范围以外的状态码都会触发此响应
                         return Promise.reject(error)
                     })
-                </pre>
-            </li>
-        </ul>
-        <h1>axios 默认情况下会将js对象序列化为JSON 如果处理成 application/x-www-form-urlencoded format 这种格式</h1>
-        <ul>
-            <li>
-                // 在浏览器环境中
-                <pre>
+                </pre
+          >
+        </li>
+      </ul>
+      <h1>
+        axios 默认情况下会将js对象序列化为JSON 如果处理成
+        application/x-www-form-urlencoded format 这种格式
+      </h1>
+      <ul>
+        <li>
+          // 在浏览器环境中
+          <pre>
                     const params = new URLSearchParams();
                     params.append('param1', 'value1');
                     params.append('param2', 'value2');
                     axios.post('/foo', params);
-                </pre>
-                // 但是不是所有；浏览器支持这个API 你可以使用这个qs这个库
-                <pre>
+                </pre
+          >
+          // 但是不是所有；浏览器支持这个API 你可以使用这个qs这个库
+          <pre>
                     const qs = require('qs');
                     axios.post('/foo', qs.stringify({ 'bar': 123 }));
-                </pre>
-                // 在ES6的环境中
-                <pre>
+                </pre
+          >
+          // 在ES6的环境中
+          <pre>
                     import qs from 'qs';
                     const data = { 'bar': 123 };
                     const options = {
@@ -210,132 +227,143 @@
                         url,
                     };
                     axios(options);
-                </pre>
-            </li>
-        </ul>
+                </pre
+          >
+        </li>
+      </ul>
     </div>
-
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
-        // console.log('🌈🌈🌈🌈🌈🌈',axios);
+      // console.log('🌈🌈🌈🌈🌈🌈',axios);
 
-        // 1-1. get 简写模式传参
-        axios.get('/user?ID=12345&name=张三&age=25')
-            // ? 后面拼接的是参数
-            .then(res => {
-                // 成功之后的回调函数
-                console.log(res);
-            }).catch(err => {
-                // 失败之后的回调函数
-                console.log(err);
-            })
+      // 1-1. get 简写模式传参
+      axios
+        .get('/user?ID=12345&name=张三&age=25')
+        // ? 后面拼接的是参数
+        .then((res) => {
+          // 成功之后的回调函数
+          console.log(res)
+        })
+        .catch((err) => {
+          // 失败之后的回调函数
+          console.log(err)
+        })
 
-        // 1-2. get 传参
-        axios.get('/user', {
-                params: {
-                    ID: 12345,
-                    name: '张三',
-                    age: 25
-                }
-            })
-            .then(res => {
-                console.log(res);
-            })
-            .catch(err => {
-                console.log(err);
-            })
+      // 1-2. get 传参
+      axios
+        .get('/user', {
+          params: {
+            ID: 12345,
+            name: '张三',
+            age: 25,
+          },
+        })
+        .then((res) => {
+          console.log(res)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
 
-        // 1-3. async await 模式传参
-        async function getUser() {
-            try {
-                const res = await axios.get('/user?ID=12345&name=zhangsan&age=25')
-                console.log(res);
-            } catch (e) {
-                console.log(e);
-            }
+      // 1-3. async await 模式传参
+      async function getUser() {
+        try {
+          const res = await axios.get('/user?ID=12345&name=zhangsan&age=25')
+          console.log(res)
+        } catch (e) {
+          console.log(e)
         }
+      }
 
-
-        // 2-1. post 简写模式传参
-        axios.post('/user', {
-                firstName: '帅',
-                lastName: '大猪'
-            })
-            .then(res => {
-                console.log(res);
-            })
-            .catch(err => {
-                console.log(err);
-            })
-
-        // 4-1. 传参格式
-        // 如果服务端将参数作为java对象来接收
-        axios.delete('demo/url', {
-            data: {
-                id: 123,
-                name: '大猪',
-            }
+      // 2-1. post 简写模式传参
+      axios
+        .post('/user', {
+          firstName: '帅',
+          lastName: '大猪',
         })
-        // 如果服务端将参数作为url参数来接收 则请求的url为：www.demo/url?id=123&name=大猪这种格式
-        axios.delete('demo/url', {
-            params: {
-                id: 123,
-                name: '大猪',
-            }
+        .then((res) => {
+          console.log(res)
+        })
+        .catch((err) => {
+          console.log(err)
         })
 
+      // 4-1. 传参格式
+      // 如果服务端将参数作为java对象来接收
+      axios.delete('demo/url', {
+        data: {
+          id: 123,
+          name: '大猪',
+        },
+      })
+      // 如果服务端将参数作为url参数来接收 则请求的url为：www.demo/url?id=123&name=大猪这种格式
+      axios.delete('demo/url', {
+        params: {
+          id: 123,
+          name: '大猪',
+        },
+      })
     </script>
 
     <script>
-        // let $error = utils.debounce(Message.error, 2000, true);//2秒内 只初次生效
+      // let $error = utils.debounce(Message.error, 2000, true);//2秒内 只初次生效
 
-        const phone = Cookies.get('phone')
-        const userName = Cookies.get('userName')
-        const loginName = Cookies.get('loginName')
-        const Authorization = Cookies.get('Authorization')
-        // 把上面从cookie里面获取到的信息合并到APP_USER这个对象中
-        const APP_USER = {
-            phone,
-            userName,
-            loginName,
-            newtoken: Authorization,
-        }
-        // 添加请求拦截器 request
-        axios.interceptors.request.use(request => {
-            // 在发送请求之前做些什么 比如在每个请求发送之前 在请求头添加登录认证信息(因为接口需要token)
-            request.headers['APP_USER'] = JSON.stringify(APP_USER)
-            return request
-        })
-        // 添加响应拦截器 response
-        axios.interceptors.response.use(response => {
-            // 对响应数据做点什么 比如
-            let { data: resp } = response;
-            return new Promise((resolve, reject) => {
-                const { errorCode } = resp;
-                if (errorCode) {
-                    reject(resp);
-                    resp.errorMsg && $error(resp.errorMsg);
-                } else {
-                    resolve(resp)
-                }
-            })
-        }, error => {
-            // 对响应错误做点什么 比如显示出错信息等
-            const { response, message } = error
-            let errorMsg = ''
-            // 分为有响应和无响应两种情况
-            if (!response) {
-                errorMsg = '网络错误，请检测网络是否正常！'
+      const phone = Cookies.get('phone')
+      const userName = Cookies.get('userName')
+      const loginName = Cookies.get('loginName')
+      const Authorization = Cookies.get('Authorization')
+      // 把上面从cookie里面获取到的信息合并到APP_USER这个对象中
+      const APP_USER = {
+        phone,
+        userName,
+        loginName,
+        newtoken: Authorization,
+      }
+      // 添加请求拦截器 request
+      axios.interceptors.request.use((request) => {
+        // 在发送请求之前做些什么 比如在每个请求发送之前 在请求头添加登录认证信息(因为接口需要token)
+        request.headers['APP_USER'] = JSON.stringify(APP_USER)
+        return request
+      })
+      // 添加响应拦截器 response
+      axios.interceptors.response.use(
+        (response) => {
+          // 对响应数据做点什么 比如
+          let { data: resp } = response
+          return new Promise((resolve, reject) => {
+            const { errorCode } = resp
+            if (errorCode) {
+              reject(resp)
+              resp.errorMsg && $error(resp.errorMsg)
             } else {
-                const { data } = response
-                errorMsg = data && data.errorMsg ? data.errorMsg : '服务器发生异常，请联系管理员'
+              resolve(resp)
             }
-            $error(errorMsg)
-            // 在控制台打印出错的日志信息
-            console.log(`%c ${ message || errorMsg }`, 'color:#fff,background-color:red');
-            return Promise.reject(error)
-        })
+          })
+        },
+        (error) => {
+          // 对响应错误做点什么 比如显示出错信息等
+          const { response, message } = error
+          let errorMsg = ''
+          // 分为有响应和无响应两种情况
+          if (!response) {
+            errorMsg = '网络错误，请检测网络是否正常！'
+          } else {
+            const { data } = response
+            errorMsg =
+              data && data.errorMsg
+                ? data.errorMsg
+                : '服务器发生异常，请联系管理员'
+          }
+          $error(errorMsg)
+          // 在控制台打印出错的日志信息
+          console.log(
+            `%c ${message || errorMsg}`,
+            'color:#fff,background-color:red'
+          )
+          return Promise.reject(error)
+        }
+      )
     </script>
-</body>
+  </body>
 </html>
