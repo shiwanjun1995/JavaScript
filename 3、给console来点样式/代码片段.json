@@ -24,5 +24,18 @@
 			"console.log(res);",
 			"$1"
 		]
+	},
+	"获取接口数据cl": {
+		"prefix": "cl",
+		"body": [
+			"console.log('%c获取接口数据','color:red; font-size: 32px;');",
+			"console.table($1);"
+		]
+	},
+	"快捷打印cg": {
+		"prefix": "cg",
+		"body": [
+			"console.log('%c大猪', 'background-color: black; color: white; font-size: 24px; padding: 2px; border-radius: 4px; text-shadow: 0 0 10px rgba(255,255,255,1)', $1);"
+		]
 	}
 }

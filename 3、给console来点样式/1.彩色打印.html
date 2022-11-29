@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>打印台彩色信息</title>
+  <title>给console来点样式</title>
   <style>
     #box {
       width: 200px;
@@ -87,17 +87,23 @@
     }
     
     console.log('%cxxxxxx','color:red;font-size:48px;');
-    console.log(randomColor());
 
     var box = document.querySelector('#box');
     var boxx = document.querySelector('#boxx');
     box.style.backgroundColor =  randomColor()
     boxx.style.backgroundColor =  `rgba(${Math.random().toFixed(3) * 1000},${Math.random().toFixed(3) * 1000},${Math.random().toFixed(3) * 1000},1)`
     console.log('%coooooo','color:green;font-size:48px;');
-    console.log(`rgba{${Math.random().toFixed(3) * 1000},${Math.random().toFixed(3) * 1000},${Math.random().toFixed(3) * 1000},1}`);
     
     // 参考链接：https://blog.csdn.net/TXX_c/article/details/83622139
+    
+    // https://developer.mozilla.org/zh-CN/docs/Web/API/Console
+    // 可以使用 %c 为打印内容定义样式：指令前的文本不会受到影响，但指令后的文本将会使用参数中声明的 CSS 样式。
 
+    console.log(
+      'Hello %c 大猪～ %c 小猪👄',
+      'background-color: black; color: white; font-size: 32px; padding: 2px; border-radius: 4px 0 0 4px; text-shadow: 0 0 10px rgba(255, 2555, 2555, 1)', // 对应的是第一个%c后面的样式
+      'background-color: black; color: pink; font-size: 32px; padding: 2px; border-radius: 0 4px 4px 0; text-shadow: 0 0 10px rgba(255, 2555, 2555, 1)',
+    )
   </script>
 </body>
 
