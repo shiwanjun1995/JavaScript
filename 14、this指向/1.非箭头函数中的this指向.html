@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>非箭头函数中的this指向</title>
+</head>
+<body>
+  <script>
+    // this 的典型应用场景有以下四个：
+    /**
+     * 1、在普通函数中，this指向window对象
+     * 2、当函数作为对象的属性时，this指向调用该函数的对象
+     * 3、在构造函数中，this指向构造函数的实例
+     * 4、在call和apply中，this指向第一个参数，即被扩展的作用域对象
+    */
+
+    // 1、普通函数中的this
+    var abc = 0
+    function fooNormal() {
+      console.log(this);
+      console.log(this.abc);
+    }
+    fooNormal()
+    
+    function fooNormalJ() {
+      console.log(this);
+      console.log(this.abc);
+    }
+    fooNormalJ()
+    // 小结：在普通函数中，不论function函数还是箭头函数，this指向相同，都是指向的window。
+
+    // 2、函数作为对象的属性
+    const objFuncKey = {
+      myName: '张三',
+      sayHi: function() {
+        console.log(this);
+        console.log(`My name is ${this.myName}`);
+      },
+      sayHiJ: () => {
+        console.log(this);
+        console.log(`My name is ${this.myName} 箭头函数`);
+      }
+    }
+    objFuncKey.sayHi()
+    objFuncKey.sayHiJ()
+    // 小结：在函数作为对象的属性情况下，两种情况的this指向不相同。function函数中的this指向的是调用该函数的对象，而箭头函数中的this指向的却是window。
+
+    // 3、在构造函数中【首字母一般大写】
+    const Animal = function (name, age) {
+      this.name = name
+      this.age = age
+    }
+    const animal = new Animal('dog', 3)
+    console.log(animal);
+
+    const AnimalJ = (name, age) => {
+      this.name = name
+      this.age = age
+    }
+    const animalJ = new AnimalJ('cat', 4)
+    console.log(animalJ); // Uncaught TypeError: AnimalJ is not a constructor
+    // 小结：在构造函数中，两种情况的this指向不相同。如果箭头函数作为构造函数，则会报错，提示该函数不是一个构造器。因此，请切记，箭头函数不能作为构造函数来使用。
+  
+    // 4、call和apply【借调的函数】
+    const objPassive = {
+      myName: '李四'
+    }
+    
+    function getPer(perName) {
+      console.log(this);
+      console.log(this[perName]);
+    }
+    // objPassive 对象本身没有getPer函数所具备的一些功能，所以去借调getPer函数内部具备的一些方法
+    getPer.call(objPassive, 'myName')
+
+    const getPerJ = (perName) => {
+      console.log(this);
+      console.log(this[perName]);
+    }
+    getPerJ.call(objPassive, 'myName')
+    // 小结：在call和apply中，两种情况的this指向不相同。普通函数中的this指向的是借调函数中的第一个参数；箭头函数中的this并不会指向借调函数中的第一个参数，而是指向了window。
+  </script>
+</body>
+</html>
