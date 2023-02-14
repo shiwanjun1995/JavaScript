@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>箭头函数中的this指向</title>
+</head>
+<body>
+  <script>
+    // 箭头函数中的this指向与我们之前所熟悉的是完全不同的
+    /**
+     * 这是因为在function函数中的this对象的指向是可变的
+     * 但是在箭头函数中，它是固定的，会绑定定义时所在的作用域，而不是指向运行时所在的作用域
+     * 
+     * 以下通过回调函数的例子来说明
+    */
+
+    // 如果在回调函数中使用的是普通函数
+    function foo1() {
+      var that = this // 注意点【this的固定】
+      setTimeout(function() {
+        console.log(that);
+        console.log(that.myName);
+      }, 1000);
+    }
+
+    var obj1 = {
+      myName: '王五'
+    }
+    // 没有进行this的固定定【window, undefined】
+    function foo1N() {
+      setTimeout(function() {
+        console.log(this); // 如果是普通函数，执行时this应该指向全局对象window
+        console.log(this.myName);
+      }, 1000)
+    }
+    foo1N.call(obj1)
+    // 进行了this的固定【调用该函数的对象】
+    foo1.call(obj1)
+
+
+    // 如果在回调函数中使用的是箭头函数【则不需要进行this的固定，因为箭头函数中的this继承的是外层函数调用的this】
+    function foo1J() {
+      setTimeout(() => {
+        console.log(this); // 箭头函数，导致this总是指向函数定义生效时所在的对象【本例是obj1】
+        console.log(this.myName);
+      }, 1000);
+    }
+    foo1J.call(obj1)
+
+    /**
+     * 使用箭头函数时的注意事项
+     * 1、函数体内的this对象，就是定义时所在的对象，而不是使用时所在的对象
+     * 2、不可以当作构造函数，不能使用new关键字，否则会抛出一个错误【因为当箭头函数作为构造函数的时候会报错，该构造函数不是一个构造器】
+     * 3、不可以使用arguments对象，该对象在函数体内不存在。如果要用，可以用 解构rest参数代替
+     * 4、不可以使用yield关键字，因此箭头函数不能用作Generator函数
+    */
+
+    // 参考链接：https://blog.csdn.net/weixin_43739375/article/details/88600586
+
+  </script>
+</body>
+</html>
