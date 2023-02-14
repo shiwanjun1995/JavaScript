@@ -31,7 +31,7 @@
     // 没有进行this的固定定【window, undefined】
     function foo1N() {
       setTimeout(function() {
-        console.log(this); // 如果是普通函数，执行时this应该指向全局对象window
+        console.log(this); // 如果是普通函数，执行时this应该指向全局对象window【这个情况和非箭头函数中的this指向是一样的】
         console.log(this.myName);
       }, 1000)
     }
