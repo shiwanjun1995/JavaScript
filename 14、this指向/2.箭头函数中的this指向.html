@@ -7,7 +7,61 @@
   <title>箭头函数中的this指向</title>
 </head>
 <body>
+  <button id="ele" onclick="alert(1)">自动点击</button>
+  <input id="ipt" type="text" placeholder="请输入" />
+
+  <div id="counter">
+    <input type="text" v-model="inputVal" />
+    <input class="cur" v-model="msg"></input>
+
+    
+    当前输入的值是<h1>{{ msg }}</h1>
+    
+  </div>
+
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+      const App = {
+        data() {
+          return {
+            inputVal: '',
+            msg: ''
+          }
+        },
+        methods: {
+        },
+
+        mounted() {
+          const el = document.querySelector('.cur')
+          el.value = '5555'
+            // 导致vue里面用 this.msg 取不到值的情况
+          
+            /**
+             * https://www.xiaohongshu.com/explore/623b07bb0000000001029bc6
+             * 原生js对某个标签赋值的时候，页面端的赋值操作无法触发 v-model 的双向绑定
+             * 此方案的原理是在获取dom后，在dom赋值操作后，手动地给dom分配一个input事件以触发vue的v-model双向绑定
+            */
+          el.dispatchEvent(new Event("input"))
+
+          console.log('看看取值是否正常',this.msg);
+
+        }
+      }
+
+      Vue.createApp(App).mount('#counter')
+    </script>
+
   <script>
+
+    var btn = document.getElementById('ele')
+    
+    let autoEvent = new Event('click')
+    btn.dispatchEvent(autoEvent)
+
+    var ipt = document.getElementById('ipt')
+    let autoInput = new Event('input')
+    ipt.dispatchEvent(autoInput)
+
     // 箭头函数中的this指向与我们之前所熟悉的是完全不同的
     /**
      * 这是因为在function函数中的this对象的指向是可变的
