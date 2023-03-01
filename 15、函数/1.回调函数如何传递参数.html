@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>回调函数如何传递参数</title>
+</head>
+<body>
+  <script>
+
+    function initRequest() {
+      console.log('初始化函数...');
+      func1()
+      // 第一种格式： 只引用这个函数名，什么时机调用放在这个函数内部
+      // func2(callBack)
+      
+      // 如果在初始化的时候就传递参数
+      // 第二种格式：这个时候就需要改变下了，再封装一层函数，在这个函数内部中调用回调函数然后传递参数
+      func2(function () {
+        // console.log('执行了这个回调函数', 2020);
+
+        // 注意这么写不行：因为这是引用了这个函数，并没有实际地去触发和调用
+        // callBack
+
+        // 需要真真实实地调用它，有必要的话再传递参数
+        callBack(000)
+      })
+    }
+
+    function func1() {
+      console.log('执行函数1的逻辑');
+    }
+    function func2(cb) {
+      // 现在的问题是要如何给这个回调函数传递参数呢？
+      console.log('执行函数2的逻辑');
+      setTimeout(() => {
+        // 第一种格式
+        // cb && cb(110)
+
+        // 第二种格式
+        cb && cb()
+      }, 3000);
+    }
+
+    function callBack(param) {
+      console.log('我是回调函数，先等父级函数执行完后再执行');
+      console.log('外界函数传递进来的参数为', param);
+    }
+
+    initRequest()
+    
+  </script>
+</body>
+</html>
