@@ -107,6 +107,43 @@
       console.log('外部传入的参数',options);
     }
     doSome({pageCur: 2})
+
+    // 参考链接；https://www.zblogba.com/247919.html#h2c1
+    // Object.assign()对原理是将后面的对象通过目标对象的 set 访问属性来添加进去而进行覆盖，所以最后的返回值其实就是第一个目标对象，可以在目标对象上添加访问属性来见识覆盖过程
+
+    /*
+    一个 getter 是一个获取某个特定属性的值的方法
+    一个 setter 是一个设定某个属性的值的方法
+    有两种方式：使用对象字面量、之后使用getter和setter方法
+    */
+    const objTarget = {
+      // 这里是设定某个属性
+      set a (value) {
+        console.log(value, this);
+        // 避免溢出，上面这是打印这个值
+        // this.a = val
+      }
+    }
+
+    Object.assign(objTarget, {a: '张三'}, {a: 18}, {a: '男'})
+
+
+    let user = {
+      name: "John",
+      surname: "Smith"
+    };
+
+    Object.defineProperty(user, 'fullName', {
+      get() {
+        return `${this.name} + ${this.surname}`;
+      },
+
+      set(value) {
+        this.name = value.split(" ")[0]
+        this.surname = value.split(" ")[1]
+        // [this.name, this.surname] = value.split(" ");
+      }
+    });
   </script>
 </body>
 </html>
