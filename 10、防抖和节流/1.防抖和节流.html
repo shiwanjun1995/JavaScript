@@ -34,21 +34,31 @@
 <body>
     <div class="content-box">
         <h2>1.防抖：</h2>
-        <span>一个大型后台系统 用户在搜索框内输入需要查询的字段信息
+        <span>
+            一个大型后台系统 用户在搜索框内输入需要查询的字段信息
             查询的时候就去请求后台返回的数据的话 这样多次输入就会频繁
             地去请求ajax 就会造成卡顿 因为用户输入具有连续性 可以等用户
-            在输入停顿的时候去请求数据</span>
-        <p>抖动停止后的时间超过设定的时间后执行一次函数</p>
+            在输入停顿的时候去请求数据
+        </span>
+        <p>
+            抖动停止后的时间超过设定的时间后执行一次函数
+            【防抖就是指触发事件后在n秒(固定时间)内函数只能执行一次，如果在n秒内又触发了事件，则会重新计算函数执行所需要的时间，执行函数的频率较大】
+        </p>
         <label>没有加防抖的</label><input type="text" id="ipt" /><br>
         <label>加了防抖的</label><input type="text" id="ipt2" /><br>
     </div>
     <div class="content-box">
         <h2>2.节流:</h2>
-        <span>一个后台系统中 用户下拉滚动去加载分页数据的时候 如果用防抖的话
+        <span>
+            一个后台系统中 用户下拉滚动去加载分页数据的时候 如果用防抖的话
             只能让用户停下滚动的时候才去请求数据 这个场景是不合理的 而是只能
             让用户无限制滚动 在滚动的第一次请求数据 滚动后间隔一定时间内还要
-            去请求数据</span>
-        <p>按照设定的时间固定执行一次函数</p>
+            去请求数据
+        </span>
+        <p>
+            按照设定的时间固定执行一次函数
+            【节流就是指触发事件后，在n秒(固定时间)内只执行一次函数，执行函数的频率较小】
+        </p>
         <label>加了节流的</label><input type="text" id="ipt3" /><br>
     </div>
     <h3>总结：</h3>
@@ -57,7 +67,7 @@
     <div class="content-container">
         小风车
         <div class="img-box">
-            <img src="./imgs/fenche.png" class="loading">
+            <img src="/imgs/fenche.png" class="loading">
         </div>
     </div>
 
@@ -99,6 +109,7 @@
                 if (timer) clearTimeout(timer);
                     timer = setTimeout(function () {
                         fn.apply(this, arguments)
+                        timer = null
                     }, wait);
             }
         }
@@ -124,35 +135,57 @@
 
         function getScrollTop() {
             var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
-            console.log(scrollTop,'去请求下拉加载的数据');
+            console.log(scrollTop,`去请求下拉加载的数据,当前时间为${new Date().toLocaleTimeString()}`);
         }
 
-        window.addEventListener('scroll', getScrollTop, false);
-        window.addEventListener('scroll', throttle(getScrollTop,1000), false);
+        // window.addEventListener('scroll', getScrollTop, false); // 没有加节流的
+        // window.addEventListener('scroll', throttle(getScrollTop,1000), false); // 加了节流的
+
+        window.addEventListener('scroll', throttleT(getScrollTop,2000), false) // 加了时间比较长的节流的
 
         // 按照指定的周期来调用函数 这个方法会不停的调用
         // 这样会出现一个问题 当间隔的时间小于函数延迟执行的时间 代码就不会执行
-        setInterval(debounceDZ3(ajaxGetData,1000), 500);
+        // setInterval(debounceDZ3(ajaxGetData,1000), 500);
         // setInterval(debounceDZ3(ajaxGetData,1000), 2000);
         // setInterval(throttle(ajaxGetData,1000), 500);
         /**
          * 想象一下有一个开关，控制着动画的运行。就像阀一样，阀开着水才能流出。
          * 同样的，我们也可以设一个(阀)flag=true;。在事件的开头处，判断if(flag){flag=false;do somenthing}
-         * 阀打开的情况下运行函数，并且把开着的水龙头关掉flag=false;让事件无法连续触发，最后事件结尾判断动画如果结束，再打开阀flag=true。
+         * 阀打开的情况下运行函数，并且把开着的水龙头关掉flag=false;让事件无法连续触发，最后事件结尾判断运行函数如果结束，再打开阀flag=true。
          * 效果：如果短时间内大量触发同一事件 让函数执行一次后 让函数在指定的时间内不再工作 直至过了这段时间后才重新生效
          */
+        // 用阀门的写法
         function throttle(fn, wait) {
-            var flag = true;
+            var flag = true; // 默认阀门打开
             return function () {
                 if (flag) {
-                    flag = false;
+                    flag = false; // 进入下面的逻辑后，阀门紧闭，一次只做一件事情
                     setTimeout(function () {
                         fn.apply(this, arguments);
-                        flag = true;
+                        flag = true; // 重新打开阀门，执行下一次的逻辑
                     }, wait)
                 }
             }
         }
+
+        // 用定时器的写法
+        function throttleT(fn, wait) {
+            let timer = null // 初始化计时器为空
+
+            // 返回一个新函数
+            return function (...args) {
+                // 如果计时器为空
+                if (!timer) {
+                    // 那就启动一个定时器，在这个固定的时间内执行一件事情
+                    timer = setTimeout(() => {
+                        fn.apply(this, args)
+                        // 执行完毕事情后，计时器重新变为空，准备下次使用
+                        timer = null
+                    }, wait); // 指定时间后执行
+                }
+            }
+        }
+
     </script>
 </body>
 </html>
