@@ -26,8 +26,14 @@
           callBack(2023)
         })
 
+        // 第三种格式：bind
         // 传递的类型一定要是一个函数
-        func22(callBack.bind(null, 2024))
+        func22(callBack.bind(this, 2024))
+
+        // 第四种格式：必包
+        // 什么是闭包? 闭包是指函数有自由独立的变量。换句话说，定义在闭包中的函数可以“记忆”它创建时候的环境。
+        // 这种方法使回调函数在被调用时候处于其自身的作用域内
+        func222(callBackTo222(2025))
       }
 
       function func1() {
@@ -51,10 +57,26 @@
           cb && cb()
         }, 4000)
       }
+      function func222(cb) {
+        console.log('执行函数222的逻辑')
+        setTimeout(() => {
+          // 第四种格式
+          cb && cb()
+        }, 5000)
+      }
 
       function callBack(param) {
         console.log('我是回调函数，先等父级函数执行完后再执行')
         console.log('外界函数传递进来的参数为', param)
+      }
+
+      function callBackTo222(param) {
+        return function (...args) {
+          console.log('我是回调函数，先等父级函数执行完后再执行')
+          console.log('外界函数传递进来的参数为', param)
+          // console.log('args', args)
+          // console.log('param', param)
+        }
       }
 
       initRequest()
@@ -62,6 +84,7 @@
       // 参考链接： https://blog.csdn.net/D578332749/article/details/81479643
       // https://www.jianshu.com/p/bb8db6100019
       // https://stackoverflow.com/questions/3458553/javascript-passing-parameters-to-a-callback-function
+      // https://www.jstips.co/zh_cn/javascript/passing-arguments-to-callback-functions/
     </script>
   </body>
 </html>
