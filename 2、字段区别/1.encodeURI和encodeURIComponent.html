@@ -1,31 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>编码</title>
-</head>
-<body>
-  <script>
-    // 相同点：两个方法都可以对 URI(通用资源标识符) 进行编码，以便发送给浏览器，但是它们编码的范围有所不同
-    // encodeURI() 不会对下列字符进行编码：ASCII字母、数字、特殊含义的符号 ~ ! @ # $ & * () = : / , ; ? +'
-    // encodeURIComponent() 不会对下列字符编码：ASCII字母、数字、~ ! * ()'
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>编码</title>
+  </head>
+  <body>
+    <script>
+      // 相同点：两个方法都可以对 URI(通用资源标识符) 进行编码，以便发送给浏览器，但是它们编码的范围有所不同
+      // encodeURI() 不会对下列字符进行编码：不会对URL 元字符以及语义字符进行转码
+      /**
+       * URL 元字符
+       * 分号（;）
+       * 逗号（,）
+       * 斜杠（/）
+       * 问号（?）
+       * 冒号（:）
+       * at（@）
+       * &
+       * 等号（=）
+       * 加号（+）
+       * 美元符号（$）
+       * 井号（#）
+       */
 
-    // 使用场景：
-    // 对 整个URL 进行编码就使用encodeURI()
-    // 对 URL中的参数 或者 URL后面的一部分 进行编码就使用encodeURIComponent()
+      /**
+       * 语义字符
+       * a-z
+       * A-Z
+       * 0-9
+       * 连词号（-）
+       * 下划线（_）
+       * 点（.）
+       * 感叹号（!）
+       * 波浪线（~）
+       * 星号（*）
+       * 单引号（'）
+       * 圆括号（()）
+       *
+       */
 
-    // 举例：
-    // 案例：https://segmentfault.com/q/1010000007728530
-    encodeURI("http://x.com/你好?a=1") // 正确
-    encodeURI("http://google.com/search?q=http://x.com/你好?a=1") // 正确
+      // 使用场景：
+      // 对 整个URL 进行编码就使用encodeURI()
+      // 对 URL中的参数 或者 URL后面的一部分 进行编码就使用encodeURIComponent()
 
-    encodeURI("http://google.com/search?q=http://x.com/你好?a=1&b=2") // 这样结果如果当作查询参数的话是有问题的，查询参数被&分隔了，有歧义
-    // 因为&没有被编码，这部分就不能作为一个整体的查询参数，而是被分隔成了http://x.com/%E4%BD%A0%E5%A5%BD?a=1和&b=2两部分
+      // 举例：
+      // 案例：https://segmentfault.com/q/1010000007728530
+      encodeURI('http://x.com/你好?a=1') // 正确
+      encodeURI('http://google.com/search?q=http://x.com/你好?a=1') // 正确
 
-    encodeURIComponent("http://google.com/search?q=http://x.com/你好?a=1&b=2") // 正确
-    
-  </script>
-</body>
+      encodeURI('http://google.com/search?q=http://x.com/你好?a=1&b=2') // 这样结果如果当作查询参数的话是有问题的，查询参数被&分隔了，有歧义
+      // 因为&没有被编码，这部分就不能作为一个整体的查询参数，而是被分隔成了http://x.com/%E4%BD%A0%E5%A5%BD?a=1和&b=2两部分
+
+      encodeURIComponent('http://google.com/search?q=http://x.com/你好?a=1&b=2') // 正确
+    </script>
+  </body>
 </html>
