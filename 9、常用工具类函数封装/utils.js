@@ -29,7 +29,7 @@ export const formatDate = (date = new Date(), fmt = 'YYYY-MM-DD HH:mm:ss') => {
         date = new Date(date)
     }
 
-    // 填充前导零
+    // 填充前导零【将数字转换为固定长度的字符串】
     // 用另一个字符串填充当前字符串（如果需要会重复填充），直到达到给定的长度。填充是从当前字符串的开头开始的。
     function formatTen(str) {
         // 第一个参数：当前 str 填充后的长度。如果该值小于或等于 str.length，则会直接返回当前 str。
