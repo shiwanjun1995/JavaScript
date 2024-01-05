@@ -19,7 +19,7 @@
     
   </div>
 
-    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://unpkg.com/vue@3.4.5"></script>
     <script>
       const App = {
         data() {
@@ -70,28 +70,31 @@
      * 以下通过回调函数的例子来说明
     */
 
-    // 如果在回调函数中使用的是普通函数
-    function foo1() {
-      var that = this // 注意点【this的固定】
-      setTimeout(function() {
-        console.log(that);
-        console.log(that.myName);
-      }, 1000);
-    }
-
     var obj1 = {
       myName: '王五'
     }
+
+    // 如果在回调函数中使用的是普通函数
+
+    // 进行了this的固定
+    function foo1() {
+      var that = this // 注意点【this的固定】
+      setTimeout(function() {
+        console.log('foo1',that);
+        console.log(that.myName);
+      }, 1000);
+    }
+    
     // 没有进行this的固定定【window, undefined】
     function foo1N() {
       setTimeout(function() {
-        console.log(this); // 如果是普通函数，执行时this应该指向全局对象window【这个情况和非箭头函数中的this指向是一样的】
+        console.log('foo1N',this); // 如果是普通函数，执行时this应该指向全局对象window【这个情况和非箭头函数中的this指向是一样的】
         console.log(this.myName);
       }, 1000)
     }
+
+    foo1.call(obj1) // 谁调用该函数，this绑定的就是谁
     foo1N.call(obj1)
-    // 进行了this的固定【调用该函数的对象】
-    foo1.call(obj1)
 
 
     // 如果在回调函数中使用的是箭头函数【则不需要进行this的固定，因为箭头函数中的this继承的是外层函数调用的this】
@@ -104,8 +107,8 @@
     foo1J.call(obj1)
 
     /**
-     * 使用箭头函数时的注意事项
-     * 1、函数体内的this对象，就是定义时所在的对象，而不是使用时所在的对象
+     * 使用箭头函数时的注意事项【箭头函数中的 this 指向是静态的，指的是箭头函数所在的作用域】
+     * 1、函数体内的this对象，就是定义时所在的对象，而不是运行时所在的对象
      * 2、不可以当作构造函数，不能使用new关键字，否则会抛出一个错误【因为当箭头函数作为构造函数的时候会报错，该构造函数不是一个构造器】
      * 3、不可以使用arguments对象，该对象在函数体内不存在。如果要用，可以用 解构rest参数代替
      * 4、不可以使用yield关键字，因此箭头函数不能用作Generator函数
